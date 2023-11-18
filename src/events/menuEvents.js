@@ -5,12 +5,12 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isStringSelectMenu()) return;
 
-        if (interaction.customId === "Menu1") {
+        if (interaction.customId === "setupMenu") {
 
             const samplemebed = new EmbedBuilder()
                 .setColor("Red")
                 .setTitle("Chisato")
-                .setDescription(`Hi, this is a test - chisato`)
+                .setDescription(`Hi, this is a menu test - chisato`)
 
             if (interaction.values == 'verify')
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })

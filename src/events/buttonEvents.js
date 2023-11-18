@@ -5,31 +5,16 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isButton()) return;
 
-        if (interaction.customId === "CreateTicket") {
-            const interactionuser = await interaction.guild.members.fetch(interaction.user.id)
-            const username = interactionuser.user.username
-            
-            interaction.guild.channels.create({
-                name: `Ticket-${username}`,
-                type: ChannelType.GuildText,
-                permissionOverwrites: [
-                    {
-                        id: interaction.guild.id,
-                        deny: [PermissionsBitField.Flags.ViewChannel],
-                    },
-                    {
-                        id: interaction.user.id,
-                        allow: [PermissionsBitField.Flags.ViewChannel],
-                    },
-                ],
-            })
+        const samplemebed = new EmbedBuilder()
+        .setColor("Red")
+        .setTitle("Chisato")
+        .setDescription(`Hi, this is a button test - chisato`)
 
-            const ticketcreated = new EmbedBuilder()
-            .setTitle("Your ticket has been created")
-            .setDescription("Support will help you soon.")
-            .setColor("Green")
-
-            interaction.reply({ embeds: [ticketcreated], ephemeral: true });
+        if (interaction.customId === "serverInfo") {
+            interaction.reply({ embeds: [samplemebed], ephemeral: true });
+        }
+        if (interaction.customId === "strikeSystem") {
+            interaction.reply({ embeds: [samplemebed], ephemeral: true });
         }
     }
 };

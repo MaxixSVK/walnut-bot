@@ -22,10 +22,10 @@ module.exports = {
         )
         .addComponents(
             new ButtonBuilder()
-                .setCustomId('contactStaff')
                 .setLabel('Contact Staff')
                 .setEmoji('997584350407295178')
-                .setStyle(ButtonStyle.Secondary),
+                .setStyle(ButtonStyle.Link)
+                .setURL("https://discord.com/channels/990527994969874493/1041770584125747220/1041771975539949618"),
         );
 
         const menuContent = [
@@ -61,7 +61,7 @@ module.exports = {
             },
         ];
         const selectMenu = new StringSelectMenuBuilder()
-            .setCustomId('Menu1')
+            .setCustomId('setupMenu')
             .setPlaceholder('Make a selection')
             .setMinValues(0)
             .setMaxValues(1)

@@ -8,16 +8,9 @@ module.exports = {
         const InfoButtons = new ActionRowBuilder()
         .addComponents(
             new ButtonBuilder()
-                .setCustomId('serverInfo')
-                .setLabel('Server Info')
-                .setEmoji('994615569833791498')
-                .setStyle(ButtonStyle.Secondary),
-        )
-        .addComponents(
-            new ButtonBuilder()
-                .setCustomId('strikeSystem')
-                .setLabel('Strike System')
-                .setEmoji('994650226453397634')
+                .setCustomId('verifyMenuButton')
+                .setLabel('Verify')
+                .setEmoji('✅')
                 .setStyle(ButtonStyle.Secondary),
         )
         .addComponents(
@@ -30,10 +23,16 @@ module.exports = {
 
         const menuContent = [
             {
-                label: 'Verify',
-                description: 'Select to verify server access.',
-                value: 'verify',
-                emoji: '✅'
+                label: 'Server Info',
+                description: 'Select to foud out more about a server.',
+                value: 'server',
+                emoji: '994615569833791498'
+            },
+            {
+                label: 'Strike System',
+                description: 'Select to foud out more about strike system.',
+                value: 'strike',
+                emoji: '994650226453397634'
             },
             {
                 label: 'Café Staff',

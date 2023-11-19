@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { Events, EmbedBuilder, } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -12,7 +12,9 @@ module.exports = {
                 .setTitle("Chisato")
                 .setDescription(`Hi, this is a menu test - chisato`)
 
-            if (interaction.values == 'verify')
+            if (interaction.values == 'server')
+                interaction.reply({ embeds: [samplemebed], ephemeral: true })
+            if (interaction.values == 'strike')
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })
             if (interaction.values == 'staff')
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })

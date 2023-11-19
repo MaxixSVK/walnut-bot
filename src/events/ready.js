@@ -21,7 +21,14 @@ module.exports = {
             console.log("----------------------------------")
         }
 
-        mongoose.connect(process.env.MongoDB).then(() => console.log("[INFO] Connected to MongoDB"));
+        try {
+            mongoose.connect(process.env.MongoDB).then(() => console.log("[INFO] Connected to MongoDB"));
+        } catch (error) {
+            console.log("[INFO] Couldn't connect to MongoDB")
+            return
+        }
+
+        
         
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({

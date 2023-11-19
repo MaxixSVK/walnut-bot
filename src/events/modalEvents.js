@@ -1,5 +1,4 @@
-const { Events, EmbedBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, AttachmentBuilder } = require('discord.js');
-const { CaptchaGenerator } = require("captcha-canvas");
+const { Events, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: Events.InteractionCreate,

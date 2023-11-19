@@ -1,4 +1,5 @@
 const { Events, ActivityType } = require("discord.js");
+const mongoose = require("mongoose");
 const config = require("../config.json");
 const path = require("path");
 const fs = require("fs");
@@ -19,6 +20,8 @@ module.exports = {
             }
             console.log("----------------------------------")
         }
+
+        mongoose.connect(process.env.MongoDB).then(() => console.log("[INFO] Connected to MongoDB"));
         
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({

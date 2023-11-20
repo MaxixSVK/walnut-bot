@@ -1,11 +1,15 @@
 const { Events, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require("captcha-canvas");
+const verifySchema = require('../schemas/verify');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-
+        /*
+        Verify button on main embed
+        creates captcha and saves it to MongoDB
+        */
         if (interaction.customId === 'verifyMenuButton') {
 
             const button = new ActionRowBuilder()
@@ -26,11 +30,32 @@ module.exports = {
                 .setColor("#E51468")
                 .setImage(`attachment://captcha.png`)
 
-            interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
-            console.log(captcha.text)
+            const data = await verifySchema.find({
+                id: interaction.user.id
+            });
 
+            const memberId = interaction.user.id
+            if (!data.length == 0) {
+                await verifySchema.deleteMany({ id: memberId })
+                await verifySchema.create({
+                    id: memberId,
+                    captcha: captcha.text
+                });
+            }
+            else {
+                await verifySchema.create({
+                    id: memberId,
+                    captcha: captcha.text
+                });
+            }
+
+            interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
         }
 
+        /*
+        Verify button on captcha embed
+        creates modal
+        */
         if (interaction.customId === "verifyEmbedButton") {
             const captchaModal = new ModalBuilder()
                 .setCustomId('captchaModal')

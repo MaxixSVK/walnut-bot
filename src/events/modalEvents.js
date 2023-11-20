@@ -1,14 +1,25 @@
 const { Events, EmbedBuilder } = require('discord.js');
+const verifySchema = require('../schemas/verify');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
 
+        /*
+        Modal event checks if user imput == captcha 
+        also deletes data from MongoDB and manipulate with user roles after verification
+        */
         if (interaction.customId === "captchaModal") {
             const userImput = interaction.fields.getTextInputValue('captchaInput');
 
-            if (userImput == "test") {//TODO
+            const data = await verifySchema.find({
+                id: interaction.user.id
+            });
+
+            let captcha = data.map(item => item.captcha).toString()
+  
+            if (userImput == captcha) {
                 const verifyEmbed = new EmbedBuilder()
                     .setColor("Green")
                     .setTitle("Verification completed")
@@ -17,7 +28,9 @@ module.exports = {
                 const guild = interaction.guild
                 const verifyRole = guild.roles.cache.find(role => role.name === 'unverified');
                 const member = interaction.member;
+                const memberId = interaction.user.id
 
+                await verifySchema.deleteMany({ id: memberId})
                 await member.roles.remove(verifyRole);
                 interaction.reply({ embeds: [verifyEmbed], ephemeral: true })
             }
@@ -29,6 +42,7 @@ module.exports = {
 
                 interaction.reply({ embeds: [noverifyEmbed], ephemeral: true })
             }
+
         }
     }
 }

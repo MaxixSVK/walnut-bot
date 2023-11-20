@@ -123,9 +123,12 @@ const text2 =
             .setTitle("Verification and Server Access")
             .setDescription(`${text2}`)
 
+        const setupEmbed = new EmbedBuilder()
+        .setColor("Green")
+        .setTitle("Setup has been completed")
 
         const channel = interaction.guild.channels.cache.find(channel => channel.name == "rules-and-info");
-        channel.send({ embeds: [firstembed, secondembed], components: [actionRow, InfoButtons] });
-        interaction.reply("ok");
+        channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
+        interaction.reply({ embeds: [setupEmbed] });
     }
 }

@@ -113,8 +113,7 @@ const text2 =
             .setImage('https://i.imgur.com/Pxy76NO.png')
 
         const secondembed = new EmbedBuilder()
-            .setTitle(`Lycoris Recoil Discord Rules\nPlease read this section carefully.
-        `)
+            .setTitle(`Lycoris Recoil Discord Rules\nPlease read this section carefully.`)
             .setColor("#E51468")
             .setDescription(`${text1}`)
 

@@ -12,6 +12,7 @@ module.exports = {
                 .setTitle("Chisato")
                 .setDescription(`Hi, this is a menu test - chisato`)
 
+            //replies for main embed 
             if (interaction.values == 'server')
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })
             if (interaction.values == 'strike')
@@ -24,6 +25,7 @@ module.exports = {
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })
             if (interaction.values == 'xp')
                 interaction.reply({ embeds: [samplemebed], ephemeral: true })
+
         }
     }
 }

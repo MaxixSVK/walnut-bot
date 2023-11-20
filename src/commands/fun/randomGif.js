@@ -3,8 +3,8 @@ const config = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("random-gif")
-        .setDescription("Random gif"),
+        .setName("gif")
+        .setDescription("Generates a random LycoReco GIF"),
     async execute(interaction) {
         const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
         const images = [

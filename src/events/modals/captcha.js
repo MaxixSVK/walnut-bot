@@ -1,15 +1,13 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const verifySchema = require('../../schemas/verify');
 
+//Modal event checks if user imput == captcha 
+//also deletes data from MongoDB and manipulate with user roles after verification
+
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
-
-        /*
-        Modal event checks if user imput == captcha 
-        also deletes data from MongoDB and manipulate with user roles after verification
-        */
         if (interaction.customId === "captchaModal") {
 
             const userImput = interaction.fields.getTextInputValue('captchaInput').toUpperCase();
@@ -44,7 +42,5 @@ module.exports = {
                 interaction.reply({ embeds: [noverifyEmbed], ephemeral: true })
             }
         }
-
-
     }
 }

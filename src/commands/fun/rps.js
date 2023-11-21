@@ -33,7 +33,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`Let's play RPS`)
             .setDescription("Now you can play rock paper scissors with Walnut")
-            .setColor("#E51468")
+            .setColor(config.Color)
 
         await interaction.reply({ embeds: [embed], components: [buttons], ephemeral: true });
     },

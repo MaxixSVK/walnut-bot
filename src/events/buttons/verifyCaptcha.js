@@ -1,13 +1,12 @@
 const { Events, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
+//Verify button on captcha embed
+//creates modal
+
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-        /*
-        Verify button on captcha embed
-        creates modal
-        */
         if (interaction.customId === "verifyEmbedButton") {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
@@ -32,6 +31,7 @@ module.exports = {
                     .setTitle("Already verified")
                     .setDescription("You are already verified on this server")
                     .setColor("Orange")
+                    
                 interaction.reply({ embeds: [embed], ephemeral: true })
             }
         }

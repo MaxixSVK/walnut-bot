@@ -11,45 +11,58 @@ module.exports = {
         creates captcha and saves it to MongoDB
         */
         if (interaction.customId === 'verifyMenuButton') {
+            const guild = interaction.guild;
+            const member = guild.members.cache.get(interaction.user.id);
+            const role = guild.roles.cache.find(role => role.name === 'unverified');
 
-            const button = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('verifyEmbedButton')
-                        .setLabel('Start verification')
-                        .setEmoji('994615569833791498')
-                        .setStyle(ButtonStyle.Primary),
-                )
+            if (member.roles.cache.has(role.id)) {
 
-            const captcha = new CaptchaGenerator()
-            const buffer = captcha.generateSync();
-            const captchaImage = new AttachmentBuilder(buffer, { name: "captcha.png" })
+                const button = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId('verifyEmbedButton')
+                            .setLabel('Start verification')
+                            .setEmoji('994615569833791498')
+                            .setStyle(ButtonStyle.Primary),
+                    )
 
-            const firstembed = new EmbedBuilder()
-                .setTitle("Solve this captcha to gain acces to LycoReco Café!")
-                .setColor("#E51468")
-                .setImage(`attachment://captcha.png`)
+                const captcha = new CaptchaGenerator()
+                const buffer = captcha.generateSync();
+                const captchaImage = new AttachmentBuilder(buffer, { name: "captcha.png" })
 
-            const data = await verifySchema.find({
-                id: interaction.user.id
-            });
+                const firstembed = new EmbedBuilder()
+                    .setTitle("Solve this captcha to gain acces to LycoReco Café!")
+                    .setColor("#E51468")
+                    .setImage(`attachment://captcha.png`)
 
-            const memberId = interaction.user.id
-            if (!data.length == 0) {
-                await verifySchema.deleteMany({ id: memberId })
-                await verifySchema.create({
-                    id: memberId,
-                    captcha: captcha.text
+                const data = await verifySchema.find({
+                    id: interaction.user.id
                 });
+
+                const memberId = interaction.user.id
+                if (!data.length == 0) {
+                    await verifySchema.deleteMany({ id: memberId })
+                    await verifySchema.create({
+                        id: memberId,
+                        captcha: captcha.text
+                    });
+                }
+                else {
+                    await verifySchema.create({
+                        id: memberId,
+                        captcha: captcha.text
+                    });
+                }
+
+                interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
             }
             else {
-                await verifySchema.create({
-                    id: memberId,
-                    captcha: captcha.text
-                });
+                const embed = new EmbedBuilder()
+                .setTitle("Already verified")
+                .setDescription("You are already verified on this server")
+                .setColor("Orange")
+                interaction.reply({ embeds: [embed], ephemeral: true })
             }
-
-            interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
         }
 
         /*
@@ -57,18 +70,31 @@ module.exports = {
         creates modal
         */
         if (interaction.customId === "verifyEmbedButton") {
-            const captchaModal = new ModalBuilder()
-                .setCustomId('captchaModal')
-                .setTitle('Captcha')
+            const guild = interaction.guild;
+            const member = guild.members.cache.get(interaction.user.id);
+            const role = guild.roles.cache.find(role => role.name === 'unverified');
 
-            const captchaInput = new TextInputBuilder()
-                .setCustomId('captchaInput')
-                .setLabel("Please enter captcha text")
-                .setStyle(TextInputStyle.Short);
+            if (member.roles.cache.has(role.id)) {
+                const captchaModal = new ModalBuilder()
+                    .setCustomId('captchaModal')
+                    .setTitle('Captcha')
 
-            const actionRow = new ActionRowBuilder().addComponents(captchaInput);
-            captchaModal.addComponents(actionRow);
-            await interaction.showModal(captchaModal);
+                const captchaInput = new TextInputBuilder()
+                    .setCustomId('captchaInput')
+                    .setLabel("Please enter captcha text")
+                    .setStyle(TextInputStyle.Short);
+
+                const actionRow = new ActionRowBuilder().addComponents(captchaInput);
+                captchaModal.addComponents(actionRow);
+                await interaction.showModal(captchaModal);
+            }
+            else {
+                const embed = new EmbedBuilder()
+                .setTitle("Already verified")
+                .setDescription("You are already verified on this server")
+                .setColor("Orange")
+                interaction.reply({ embeds: [embed], ephemeral: true })
+            }
         }
 
         //replies for rps

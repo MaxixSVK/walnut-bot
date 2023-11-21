@@ -11,14 +11,15 @@ module.exports = {
         also deletes data from MongoDB and manipulate with user roles after verification
         */
         if (interaction.customId === "captchaModal") {
-            const userImput = interaction.fields.getTextInputValue('captchaInput');
+
+            const userImput = interaction.fields.getTextInputValue('captchaInput').toUpperCase();
 
             const data = await verifySchema.find({
                 id: interaction.user.id
             });
 
             let captcha = data.map(item => item.captcha).toString()
-  
+
             if (userImput == captcha) {
                 const verifyEmbed = new EmbedBuilder()
                     .setColor("Green")
@@ -30,7 +31,7 @@ module.exports = {
                 const member = interaction.member;
                 const memberId = interaction.user.id
 
-                await verifySchema.deleteMany({ id: memberId})
+                await verifySchema.deleteMany({ id: memberId })
                 await member.roles.remove(verifyRole);
                 interaction.reply({ embeds: [verifyEmbed], ephemeral: true })
             }
@@ -42,7 +43,8 @@ module.exports = {
 
                 interaction.reply({ embeds: [noverifyEmbed], ephemeral: true })
             }
-
         }
+
+
     }
 }

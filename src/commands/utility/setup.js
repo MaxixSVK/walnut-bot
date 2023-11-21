@@ -15,11 +15,11 @@ module.exports = {
         )
         .addComponents(
             new ButtonBuilder()
+                .setCustomId('ticket')
                 .setLabel('Contact Staff')
                 .setEmoji('997584350407295178')
-                .setStyle(ButtonStyle.Link)
-                .setURL("https://discord.com/channels/990527994969874493/1041770584125747220/1041771975539949618"),
-        );
+                .setStyle(ButtonStyle.Secondary),
+        )
 
         const menuContent = [
             {

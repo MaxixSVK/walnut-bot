@@ -1,6 +1,6 @@
 const { Events, ActivityType } = require("discord.js");
 const mongoose = require("mongoose");
-const config = require("../config.json");
+const config = require("../../config.json");
 const path = require("path");
 const fs = require("fs");
 
@@ -11,10 +11,10 @@ module.exports = {
         if (config.CommandsListOnStartup) {
             console.log("[INFO] Loaded commands:")
             console.log("----------------------------------")
-            const folders = fs.readdirSync(path.join(__dirname, "../commands"));
+            const folders = fs.readdirSync(path.join(__dirname, "../../commands"));
 
             for (const folderjs of folders) {
-                const filesjslog = fs.readdirSync(path.join(__dirname, "../commands/") + folderjs).filter(file => file.endsWith(".js"));
+                const filesjslog = fs.readdirSync(path.join(__dirname, "../../commands/") + folderjs).filter(file => file.endsWith(".js"));
                 console.log(folderjs.toUpperCase())
                 console.log(filesjslog.toString().replaceAll(".js,", " "))
             }

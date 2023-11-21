@@ -5,8 +5,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
-
 client.commands = new Collection();
+
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
@@ -25,16 +25,33 @@ for (const folder of commandFolders) {
 }
 
 const eventsPath = path.join(__dirname, "events");
+const eventFolders = fs.readdirSync(eventsPath);
+
+for (const eventFolder of eventFolders) {
+	const eventPath = path.join(eventsPath, eventFolder);
+	const eventFiles = fs.readdirSync(eventPath).filter(file => file.endsWith(".js"));
+	for (const file of eventFiles) {
+		const eventFilePath = path.join(eventPath, file);
+		const event = require(eventFilePath);
+		if (event.once) {
+			client.once(event.name, (...args) => event.execute(...args));
+		} else {
+			client.on(event.name, (...args) => event.execute(...args));
+		}
+	}
+}
+
+/*const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith(".js"));
 
 for (const file of eventFiles) {
-    const filePath = path.join(eventsPath, file);
-    const event = require(filePath);
-    if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
-    } else {
-        client.on(event.name, (...args) => event.execute(...args));
-    }
-}
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}*/
 
 client.login(process.env.token);

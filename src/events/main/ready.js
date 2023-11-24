@@ -16,7 +16,7 @@ module.exports = {
             for (const folderjs of folders) {
                 const filesjslog = fs.readdirSync(path.join(__dirname, "../../commands/") + folderjs).filter(file => file.endsWith(".js"));
                 console.log(folderjs.toUpperCase())
-                console.log(filesjslog.toString().replaceAll(".js,", " "))
+                console.log(filesjslog.toString().replaceAll(".js", " ").replaceAll(",", ""))
             }
             console.log("----------------------------------")
         }
@@ -28,13 +28,11 @@ module.exports = {
             return
         }
 
-        
-        
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({
             activities: [{
-                name: "everyone :)",
-                type: ActivityType.Listening
+                name: "Hacking DA",
+                type: ActivityType.Custom
             }],
             status: "online"
         });

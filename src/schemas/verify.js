@@ -5,4 +5,4 @@ let verifySchema = new Schema({
     captcha: String,
 })
 
-module.exports = model("ver", verifySchema)
+module.exports = model("verification", verifySchema)

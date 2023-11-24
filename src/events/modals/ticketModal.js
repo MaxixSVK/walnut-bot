@@ -1,18 +1,18 @@
 const { Events, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const config = require("../../config.json");
+const uniqid = require('uniqid');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === "ticketModal") {
-            const interactionuser = await interaction.guild.members.fetch(interaction.user.id)
-            const username = interactionuser.user.username
-            const roleId = interaction.guild.roles.cache.find(role => role.name == "ticket-staff");
-            const channelName = `ticket-${username}`
+            const roleId = interaction.guild.roles.cache.find(role => role.name == "walnut-moderation");
+            const ticketId = uniqid();
+            const channelName = `ticket-${ticketId}`
 
             interaction.guild.channels.create({
-                name: `ticket-${username}`,
+                name: channelName,
                 type: ChannelType.GuildText,
                 permissionOverwrites: [
                     {
@@ -38,11 +38,17 @@ module.exports = {
                 .setTitle("Your ticket has been created")
                 .setDescription("staff team will get in touch with you soon.")
                 .setColor("Green")
-            
+
             const ticketEmbed = new EmbedBuilder()
-            .setTitle(titleImput)
-            .setDescription(dscImput)
-            .setColor(config.Color)
+                .setTitle("The ticket has been created")
+                .setDescription(`<@${interaction.member.id}> created ticket`)
+                .setColor(config.Color)
+                .addFields(
+                    { name: "Ticket's name:", value: titleImput, inline: false },
+                    { name: "Ticket's description:", value: dscImput, inline: false },
+                    { name: "Ticket ID:", value: ticketId, inline: false },
+                    
+                )
 
             setTimeout(() => {
                 const ticketChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);

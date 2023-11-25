@@ -1,6 +1,6 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const config = require("../../config.json");
-const uniqid = require('uniqid'); 
+const uniqid = require('uniqid');
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
@@ -38,7 +38,6 @@ module.exports = {
                 { name: "Who's message has been reported:", value: `${interaction.targetMessage.author}`, inline: false },
                 { name: "Reported message:", value: `${interaction.targetMessage.content}`, inline: false },
                 { name: "Report ID:", value: reportId, inline: false },
-                
             )
 
         const reportCreated = new EmbedBuilder()
@@ -46,10 +45,9 @@ module.exports = {
             .setDescription("Thank you for making this server a better place.")
             .setColor("Green")
 
-
         setTimeout(() => {
-            const ticketChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);
-            ticketChannel.send({ content: `<@${interaction.user.id}> has reported a message <@&1176584982416863273>`, embeds: [reportedEmbed] });
+            const reportChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);
+            reportChannel.send({ content: `<@${interaction.user.id}> has reported a message <@&1176584982416863273>`, embeds: [reportedEmbed] });
         }, 3000);
 
         interaction.reply({ embeds: [reportCreated], ephemeral: true });

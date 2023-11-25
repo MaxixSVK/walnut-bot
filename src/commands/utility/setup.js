@@ -1,9 +1,10 @@
-const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("setup")
-        .setDescription("just a setup command"),
+        .setDescription("just a setup command")
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const InfoButtons = new ActionRowBuilder()
         .addComponents(
@@ -59,6 +60,7 @@ module.exports = {
                 emoji: '997605599531507873',
             },
         ];
+        
         const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('setupMenu')
             .setPlaceholder('Make a selection')

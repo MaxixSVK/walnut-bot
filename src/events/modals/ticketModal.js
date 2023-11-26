@@ -36,12 +36,11 @@ module.exports = {
 
             const ticketCreated = new EmbedBuilder()
                 .setTitle("Your ticket has been created")
-                .setDescription("staff team will get in touch with you soon.")
+                .setDescription("Staff team will get in touch with you soon.")
                 .setColor("Green")
 
             const ticketEmbed = new EmbedBuilder()
                 .setTitle("The ticket has been created")
-                .setDescription(`<@${interaction.member.id}> created ticket`)
                 .setColor(config.Color)
                 .addFields(
                     { name: "Ticket's name:", value: titleImput, inline: false },

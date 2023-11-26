@@ -1,4 +1,4 @@
-const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, PermissionsBitField } = require('discord.js');
 const config = require("../../config.json");
 
 module.exports = {
@@ -13,7 +13,31 @@ module.exports = {
 
             if (member.roles.cache.has(role.id)) {
 
-                interaction.reply("ok")
+                interaction.channel.permissionOverwrites.set([
+                    {
+                        id: interaction.guild.id,
+                        deny: [PermissionsBitField.Flags.ViewChannel],
+                    },
+                    {
+                        id: role.id,
+                        allow: [PermissionsBitField.Flags.ViewChannel],
+                    },
+                ]);
+                const deleteEmbed = new EmbedBuilder()
+                    .setTitle("Ticket has been closed")
+                    .setDescription("Now only staff team can see this ticket")
+                    .setColor("Red")
+
+                const deleteButton = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId('deleteTicket')
+                            .setLabel('Delete Ticket')
+                            .setEmoji('❌')
+                            .setStyle(ButtonStyle.Danger),
+                    )
+
+                await interaction.reply({ embeds: [deleteEmbed], components: [deleteButton], ephemeral: true })
             }
             else {
                 const permsEmbed = new EmbedBuilder()
@@ -21,7 +45,7 @@ module.exports = {
                     .setDescription("You don't have permission to close this ticket")
                     .setColor("Red")
 
-                await interaction.reply({ embeds: [permsEmbed], ephemeral: true  })
+                await interaction.reply({ embeds: [permsEmbed], ephemeral: true })
             }
         }
     }

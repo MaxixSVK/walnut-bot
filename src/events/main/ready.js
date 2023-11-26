@@ -31,7 +31,7 @@ module.exports = {
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({
             activities: [{
-                name: "Hacking DA",
+                name: config.CustomStatus,
                 type: ActivityType.Custom
             }],
             status: "online"

@@ -1,4 +1,4 @@
-const { Events, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
+const { Events, EmbedBuilder, ChannelType, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const config = require("../../config.json");
 const uniqid = require('uniqid');
 
@@ -7,7 +7,7 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === "ticketModal") {
-            const roleId = interaction.guild.roles.cache.find(role => role.name == "walnut-moderation");
+            const roleId = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
             const ticketId = uniqid();
             const channelName = `ticket-${ticketId}`
 
@@ -51,8 +51,16 @@ module.exports = {
                 )
 
             setTimeout(() => {
+                const button = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('closeTicket')
+                        .setLabel('Close ticket')
+                        .setEmoji('✅')
+                        .setStyle(ButtonStyle.Primary),
+                )
                 const ticketChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);
-                ticketChannel.send({ content: `<@${interaction.user.id}> has created ticket <@&1176584982416863273>`, embeds: [ticketEmbed] });
+                ticketChannel.send({ content: `<@${interaction.user.id}> has created ticket ${roleId}`, embeds: [ticketEmbed], components: [button] });
             }, 3000);
 
             interaction.reply({ embeds: [ticketCreated], ephemeral: true });

@@ -1,7 +1,5 @@
 const { Events, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
-
-//Verify button on captcha embed
-//creates modal
+const config = require("../../config.json");
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -10,7 +8,7 @@ module.exports = {
         if (interaction.customId === "verifyEmbedButton") {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = guild.roles.cache.find(role => role.name === 'unverified');
+            const role = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
 
             if (member.roles.cache.has(role.id)) {
                 const captchaModal = new ModalBuilder()

@@ -12,7 +12,6 @@ module.exports = {
                 .setTitle("Chisato")
                 .setDescription(`Hi, this is a menu test - chisato`)
 
-            //replies for main embed 
             if (interaction.values == 'server') {
                 await interaction.update(interaction)
                 await interaction.followUp({ embeds: [samplemebed], ephemeral: true })

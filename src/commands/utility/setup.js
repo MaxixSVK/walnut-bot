@@ -1,4 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const config = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -128,7 +129,7 @@ const text2 =
         .setColor("Green")
         .setTitle("Setup has been completed")
 
-        const channel = interaction.guild.channels.cache.find(channel => channel.name == "rules-and-info");
+        const channel = interaction.guild.channels.cache.find(channel => channel.name == config.RulesChannel);
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
         interaction.reply({ embeds: [setupEmbed] });
     }

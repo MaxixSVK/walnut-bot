@@ -4,7 +4,7 @@ module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-        //replies for rps
+        
         const walnut = ["rock", "paper", "scissors",];
         const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
         let walnutFinal = [random(walnut)].toString()

@@ -1,19 +1,16 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require("captcha-canvas");
 const verifySchema = require('../../schemas/verify');
+const config = require("../../config.json");
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-        /*
-        Verify button on main embed
-        creates captcha and saves it to MongoDB
-        */
         if (interaction.customId === 'verifyMenuButton') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = guild.roles.cache.find(role => role.name === 'unverified');
+            const role = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
 
             if (member.roles.cache.has(role.id)) {
 

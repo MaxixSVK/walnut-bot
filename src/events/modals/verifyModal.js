@@ -1,8 +1,6 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const verifySchema = require('../../schemas/verify');
-
-//Modal event checks if user imput == captcha 
-//also deletes data from MongoDB and manipulate with user roles after verification
+const config = require("../../config.json");
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -25,7 +23,7 @@ module.exports = {
                     .setDescription(`Enjoy your time on a server`)
 
                 const guild = interaction.guild
-                const verifyRole = guild.roles.cache.find(role => role.name === 'unverified');
+                const verifyRole = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
                 const member = interaction.member;
                 const memberId = interaction.user.id
 

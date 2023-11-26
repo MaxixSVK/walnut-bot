@@ -1,11 +1,16 @@
-const {  SlashCommandBuilder, EmbedBuilder, AttachmentBuilder} = require('discord.js');
+const {  SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const config = require("../../config.json");
 const axios = require('axios');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("manga")
-        .setDescription("manga search"),
+        .setDescription("manga search")
+        .addStringOption(option =>
+            option
+              .setName("name")
+              .setDescription("Your question for AI.")
+              .setRequired(true)),
     async execute(interaction) {
         const title = interaction.options.getString("name");
 
@@ -15,7 +20,7 @@ module.exports = {
             method: 'GET',
             url: `${baseUrl}/manga`,
             params: {
-                title: title
+                title: "title"
             }
         });
         
@@ -39,7 +44,7 @@ module.exports = {
 
         const image = `${baseImageUrl}/data/${imagehash}/${imagesIds[0]}`
         console.log(image)
-
+        
         const atcImage = new AttachmentBuilder(image, { name: "atcImage.png" })
         
         const embed = new EmbedBuilder()

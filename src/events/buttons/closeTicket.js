@@ -29,13 +29,13 @@ module.exports = {
                     .setColor("Red")
 
                 const deleteButton = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId('deleteTicket')
-                            .setLabel('Delete Ticket')
-                            .setEmoji('❌')
-                            .setStyle(ButtonStyle.Danger),
-                    )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('transcriptAndDeletetTicket')
+                        .setLabel('Make a Transcript and Delete Ticket')
+                        .setEmoji('✅')
+                        .setStyle(ButtonStyle.Primary),
+                )
 
                 await interaction.reply({ embeds: [deleteEmbed], components: [deleteButton], ephemeral: true })
             }

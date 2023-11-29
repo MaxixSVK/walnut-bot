@@ -6,12 +6,12 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isButton()) return;
         if (interaction.customId === "closeTicket") {
-
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = guild.roles.cache.find(role => role.name === config.StaffRole);
+            const staffRoleID = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
+            const walnutRoleID = interaction.guild.roles.cache.find(role => role.name == config.Walnutrole);
 
-            if (member.roles.cache.has(role.id)) {
+            if (member.roles.cache.has(staffRoleID.id)) {
 
                 interaction.channel.permissionOverwrites.set([
                     {
@@ -19,7 +19,11 @@ module.exports = {
                         deny: [PermissionsBitField.Flags.ViewChannel],
                     },
                     {
-                        id: role.id,
+                        id: staffRoleID,
+                        allow: [PermissionsBitField.Flags.ViewChannel],
+                    },
+                    {
+                        id: walnutRoleID,
                         allow: [PermissionsBitField.Flags.ViewChannel],
                     },
                 ]);
@@ -37,7 +41,7 @@ module.exports = {
                         .setStyle(ButtonStyle.Primary),
                 )
 
-                await interaction.reply({ embeds: [deleteEmbed], components: [deleteButton], ephemeral: true })
+                await interaction.reply({ embeds: [deleteEmbed], components: [deleteButton] })
             }
             else {
                 const permsEmbed = new EmbedBuilder()

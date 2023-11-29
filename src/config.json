@@ -2,6 +2,7 @@
     "CommandsListOnStartup": true,
     "Color": "#D78B84",
     "StaffRole": "Staff",
+    "Walnutrole": "Walnut",
     "UnverifiedRole": "Unverified",
     "RulesChannel": "rules-and-info",
     "WelcomeChannel": "welcome-feed",

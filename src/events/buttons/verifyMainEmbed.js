@@ -1,6 +1,6 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require("captcha-canvas");
-const verifySchema = require('../../schemas/verify');
+const verifySchema = require('../../schemas/verificationSchema');
 const config = require("../../config.json");
 
 module.exports = {

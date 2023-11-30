@@ -1,5 +1,5 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const verifySchema = require('../../schemas/verify');
+const verifySchema = require('../../schemas/verificationSchema');
 const config = require("../../config.json");
 
 module.exports = {

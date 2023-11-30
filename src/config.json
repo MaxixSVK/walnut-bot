@@ -1,5 +1,5 @@
 {
-    "CommandsListOnStartup": true,
+    "CommandsListOnStartup": false,
     "Color": "#D78B84",
     "StaffRole": "Staff",
     "Walnutrole": "Walnut",

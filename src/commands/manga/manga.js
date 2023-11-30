@@ -13,14 +13,13 @@ module.exports = {
               .setRequired(true)),
     async execute(interaction) {
         const title = interaction.options.getString("name");
-
         const baseUrl = 'https://api.mangadex.org';
 
         const resp = await axios({
             method: 'GET',
             url: `${baseUrl}/manga`,
             params: {
-                title: "title"
+                title: title
             }
         });
         
@@ -48,7 +47,7 @@ module.exports = {
         const atcImage = new AttachmentBuilder(image, { name: "atcImage.png" })
         
         const embed = new EmbedBuilder()
-            .setColor("#E51468")
+            .setColor(config.Color)
             .setImage(`attachment://atcImage.png`)
 
         interaction.reply({ embeds: [embed], files: [atcImage],})

@@ -5,6 +5,8 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isCommand()) return;
 
+        if (!interaction.guild) return await interaction.reply({ content: "Commands are only useable on Servers", ephemeral: true });
+        
         const command = interaction.client.commands.get(interaction.commandName);
 
         if (!command) {
@@ -18,9 +20,9 @@ module.exports = {
             console.error(error);
 
             const errorembed = new EmbedBuilder()
-            .setColor("Red")
-            .setTitle("ERROR")
-            .setDescription(`There was an error while executing this command!\n Please contact the bot developer.`)
+                .setColor("Red")
+                .setTitle("ERROR")
+                .setDescription(`There was an error while executing this command!\n Please contact the bot developer.`)
 
             if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({ embeds: [errorembed], ephemeral: true });

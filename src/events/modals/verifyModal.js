@@ -1,12 +1,12 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const verifySchema = require('../../schemas/verificationSchema');
-const config = require("../../config.json");
+const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
-        if (interaction.customId === "captchaModal") {
+        if (interaction.customId === 'captchaModal') {
 
             const userImput = interaction.fields.getTextInputValue('captchaInput').toUpperCase();
 
@@ -18,8 +18,8 @@ module.exports = {
 
             if (userImput == captcha) {
                 const verifyEmbed = new EmbedBuilder()
-                    .setColor("Green")
-                    .setTitle("Verification completed")
+                    .setColor('Green')
+                    .setTitle('Verification completed')
                     .setDescription(`Enjoy your time on a server`)
 
                 const guild = interaction.guild
@@ -33,8 +33,8 @@ module.exports = {
             }
             else {
                 const noverifyEmbed = new EmbedBuilder()
-                    .setColor("Red")
-                    .setTitle("Verification was not completed")
+                    .setColor('Red')
+                    .setTitle('Verification was not completed')
                     .setDescription(`You entered wrong captcha please try again.`)
 
                 interaction.reply({ embeds: [noverifyEmbed], ephemeral: true })

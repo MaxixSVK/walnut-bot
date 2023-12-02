@@ -1,10 +1,10 @@
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
-const config = require("../../config.json");
+const config = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("setup")
-        .setDescription("just a setup command")
+        .setName('setup')
+        .setDescription('just a setup command')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const InfoButtons = new ActionRowBuilder()
@@ -112,22 +112,22 @@ const text2 =
 `
 
         const firstembed = new EmbedBuilder()
-            .setColor("#E51468")
+            .setColor('#E51468')
             .setImage('https://i.imgur.com/Pxy76NO.png')
 
         const secondembed = new EmbedBuilder()
             .setTitle(`Lycoris Recoil Discord Rules\nPlease read this section carefully.`)
-            .setColor("#E51468")
+            .setColor('#E51468')
             .setDescription(`${text1}`)
 
         const thirdembed = new EmbedBuilder()
-            .setColor("#E51468")
-            .setTitle("Verification and Server Access")
+            .setColor('#E51468')
+            .setTitle('Verification and Server Access')
             .setDescription(`${text2}`)
 
         const setupEmbed = new EmbedBuilder()
-        .setColor("Green")
-        .setTitle("Setup has been completed")
+        .setColor('Green')
+        .setTitle('Setup has been completed')
 
         const channel = interaction.guild.channels.cache.find(channel => channel.name == config.RulesChannel);
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });

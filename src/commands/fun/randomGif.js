@@ -1,9 +1,9 @@
-const { SlashCommandBuilder} = require("discord.js");
+const { SlashCommandBuilder} = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("gif")
-        .setDescription("Generates a random LycoReco GIF"),
+        .setName('gif')
+        .setDescription('Generates a random LycoReco GIF'),
     async execute(interaction) {
         const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
         const images = [

@@ -1,12 +1,12 @@
 const { Events, EmbedBuilder, ChannelType, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
-const config = require("../../config.json");
+const config = require('../../config.json');
 const uniqid = require('uniqid');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
-        if (interaction.customId === "ticketModal") {
+        if (interaction.customId === 'ticketModal') {
             const staffRoleID = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
             const walnutRoleID = interaction.guild.roles.cache.find(role => role.name == config.Walnutrole);
             const ticketId = uniqid();
@@ -40,17 +40,17 @@ module.exports = {
 
 
             const ticketCreated = new EmbedBuilder()
-                .setTitle("Your ticket has been created")
-                .setDescription("Staff team will get in touch with you soon.")
-                .setColor("Green")
+                .setTitle('Your ticket has been created')
+                .setDescription('Staff team will get in touch with you soon.')
+                .setColor('Green')
 
             const ticketEmbed = new EmbedBuilder()
-                .setTitle("The ticket has been created")
+                .setTitle('The ticket has been created')
                 .setColor(config.Color)
                 .addFields(
-                    { name: "Ticket's name:", value: titleImput, inline: false },
-                    { name: "Ticket's description:", value: dscImput, inline: false },
-                    { name: "Ticket ID:", value: ticketId, inline: false },
+                    { name: 'Ticket\'s name:', value: titleImput, inline: false },
+                    { name: 'Ticket\'s description:', value: dscImput, inline: false },
+                    { name: 'Ticket ID:', value: ticketId, inline: false },
                     
                 )
 

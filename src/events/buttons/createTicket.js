@@ -4,7 +4,7 @@ module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-        if (interaction.customId === "ticket") {
+        if (interaction.customId === 'ticket') {
 
             const ticketModal = new ModalBuilder()
                 .setCustomId('ticketModal')
@@ -12,12 +12,12 @@ module.exports = {
 
             const titleInput = new TextInputBuilder()
                 .setCustomId('titTicketleInput')
-                .setLabel("Please enter ticket name")
+                .setLabel('Please enter ticket name')
                 .setStyle(TextInputStyle.Short);
 
             const dscInput = new TextInputBuilder()
                 .setCustomId('dscTicketInput')
-                .setLabel("Please enter further context")
+                .setLabel('Please enter further context')
                 .setStyle(TextInputStyle.Paragraph);
 
             const firstActionRow = new ActionRowBuilder().addComponents(titleInput);

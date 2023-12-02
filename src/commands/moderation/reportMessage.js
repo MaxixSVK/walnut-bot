@@ -1,5 +1,5 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
-const config = require("../../config.json");
+const config = require('../../config.json');
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -35,15 +35,15 @@ module.exports = {
             .setDescription(`<@${interaction.member.id}> reported a message.\n Content of the message was verifiend`)
             .setColor(config.Color)
             .addFields(
-                { name: "Who's message has been reported:", value: `${interaction.targetMessage.author}`, inline: false },
-                { name: "Reported message:", value: `${interaction.targetMessage.content}`, inline: false },
-                { name: "Report ID:", value: reportId, inline: false },
+                { name: 'Who\'s message has been reported:', value: `${interaction.targetMessage.author}`, inline: false },
+                { name: 'Reported message:', value: `${interaction.targetMessage.content}`, inline: false },
+                { name: 'Report ID:', value: reportId, inline: false },
             )
 
         const reportCreated = new EmbedBuilder()
-            .setTitle("Report has been sent successfully")
-            .setDescription("Thank you for making this server a better place.")
-            .setColor("Green")
+            .setTitle('Report has been sent successfully')
+            .setDescription('Thank you for making this server a better place.')
+            .setColor('Green')
 
         setTimeout(() => {
             const reportChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);

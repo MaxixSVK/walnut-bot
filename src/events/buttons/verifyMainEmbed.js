@@ -1,7 +1,7 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
-const { CaptchaGenerator } = require("captcha-canvas");
+const { CaptchaGenerator } = require('captcha-canvas');
 const verifySchema = require('../../schemas/verificationSchema');
-const config = require("../../config.json");
+const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -25,11 +25,11 @@ module.exports = {
 
                 const captcha = new CaptchaGenerator()
                 const buffer = captcha.generateSync();
-                const captchaImage = new AttachmentBuilder(buffer, { name: "captcha.png" })
+                const captchaImage = new AttachmentBuilder(buffer, { name: 'captcha.png' })
 
                 const firstembed = new EmbedBuilder()
-                    .setTitle("Solve this captcha to gain acces to LycoReco Café!")
-                    .setColor("#E51468")
+                    .setTitle('Solve this captcha to gain acces to LycoReco Café!')
+                    .setColor('#E51468')
                     .setImage(`attachment://captcha.png`)
 
                 const data = await verifySchema.find({
@@ -55,9 +55,9 @@ module.exports = {
             }
             else {
                 const embed = new EmbedBuilder()
-                .setTitle("Already verified")
-                .setDescription("You are already verified on this server")
-                .setColor("Orange")
+                .setTitle('Already verified')
+                .setDescription('You are already verified on this server')
+                .setColor('Orange')
                 interaction.reply({ embeds: [embed], ephemeral: true })
             }
         }

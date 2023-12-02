@@ -5,7 +5,8 @@ const uniqid = require('uniqid');
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Report message')
-        .setType(ApplicationCommandType.Message),
+        .setType(ApplicationCommandType.Message)
+        .setDMPermission(false),
     async execute(interaction) {
         const roleId = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
         const reportId = uniqid();

@@ -5,7 +5,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("setup")
         .setDescription("just a setup command")
-        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+        .setDMPermission(false),
     async execute(interaction) {
         const InfoButtons = new ActionRowBuilder()
         .addComponents(

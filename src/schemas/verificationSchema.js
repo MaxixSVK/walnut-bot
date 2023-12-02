@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-let verifySchema = new Schema({
+const verifySchema = new Schema({
     id: String,
     captcha: String,
 })

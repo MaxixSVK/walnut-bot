@@ -5,8 +5,6 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isCommand()) return;
 
-        if (!interaction.guild) return await interaction.reply({ content: "Commands are only useable on Servers", ephemeral: true });
-        
         const command = interaction.client.commands.get(interaction.commandName);
 
         if (!command) {

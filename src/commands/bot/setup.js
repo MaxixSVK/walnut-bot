@@ -131,6 +131,6 @@ const text2 =
 
         const channel = interaction.guild.channels.cache.find(channel => channel.name == config.RulesChannel);
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
-        interaction.reply({ embeds: [setupEmbed] });
+        interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
 }

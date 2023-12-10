@@ -10,7 +10,7 @@ module.exports = {
             const member = guild.members.cache.get(interaction.user.id);
             const role = config.UnverifiedRole;
 
-            if (member.roles.cache.has(role.id)) {
+            if (member.roles.cache.has(role)) {
                 const captchaModal = new ModalBuilder()
                     .setCustomId('captchaModal')
                     .setTitle('Captcha')

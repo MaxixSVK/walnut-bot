@@ -11,7 +11,7 @@ module.exports = {
             const staffRoleID = config.StaffRole;
             const walnutRoleID = config.Walnutrole;
 
-            if (member.roles.cache.has(staffRoleID.id)) {
+            if (member.roles.cache.has(staffRoleID)) {
 
                 interaction.channel.permissionOverwrites.set([
                     {

@@ -64,7 +64,7 @@ module.exports = {
                         .setStyle(ButtonStyle.Primary),
                 )
                 const ticketChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);
-                ticketChannel.send({ content: `<@${interaction.user.id}> has created ticket ${staffRoleID}`, embeds: [ticketEmbed], components: [button] });
+                ticketChannel.send({ content: `<@${interaction.user.id}> has created ticket <@&${staffRoleID}>`, embeds: [ticketEmbed], components: [button] });
             }, 3000);
 
             interaction.reply({ embeds: [ticketCreated], ephemeral: true });

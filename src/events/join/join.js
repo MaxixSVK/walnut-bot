@@ -15,8 +15,7 @@ module.exports = {
         ];
 
         const members = member.guild.memberCount
-        const guild = member.guild
-        const verifyRole = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
+        const verifyRole = config.UnverifiedRole;
 
         await member.roles.add(verifyRole);
 

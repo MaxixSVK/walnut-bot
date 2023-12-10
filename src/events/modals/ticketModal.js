@@ -7,8 +7,8 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === 'ticketModal') {
-            const staffRoleID = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
-            const walnutRoleID = interaction.guild.roles.cache.find(role => role.name == config.Walnutrole);
+            const staffRoleID = config.StaffRole;
+            const walnutRoleID = config.Walnutrole;
             const ticketId = uniqid();
             const channelName = `ticket-${ticketId}`
 

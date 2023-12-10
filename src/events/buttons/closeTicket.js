@@ -8,8 +8,8 @@ module.exports = {
         if (interaction.customId === 'closeTicket') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const staffRoleID = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
-            const walnutRoleID = interaction.guild.roles.cache.find(role => role.name == config.Walnutrole);
+            const staffRoleID = config.StaffRole;
+            const walnutRoleID = config.Walnutrole;
 
             if (member.roles.cache.has(staffRoleID.id)) {
 

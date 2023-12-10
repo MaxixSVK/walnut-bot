@@ -7,7 +7,7 @@ module.exports = {
         .setName('Report message')
         .setType(ApplicationCommandType.Message),
     async execute(interaction) {
-        const roleId = interaction.guild.roles.cache.find(role => role.name == config.StaffRole);
+        const roleId = config.StaffRole;
         const reportId = uniqid();
         const channelName = `report-${reportId}`
 

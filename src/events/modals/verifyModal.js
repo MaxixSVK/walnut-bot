@@ -22,10 +22,10 @@ module.exports = {
                     .setTitle('Verification completed')
                     .setDescription(`Enjoy your time on a server`)
 
-                const guild = interaction.guild
-                const verifyRole = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
+                const guild = interaction.guild;
+                const verifyRole = config.UnverifiedRole;
                 const member = interaction.member;
-                const memberId = interaction.user.id
+                const memberId = interaction.user.id;
 
                 await verifySchema.deleteMany({ id: memberId })
                 await member.roles.remove(verifyRole);

@@ -10,7 +10,7 @@ module.exports = {
         if (interaction.customId === 'verifyMenuButton') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = guild.roles.cache.find(role => role.name === config.UnverifiedRole);
+            const role = config.UnverifiedRole;
 
             if (member.roles.cache.has(role.id)) {
 

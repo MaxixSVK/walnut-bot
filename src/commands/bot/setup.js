@@ -103,7 +103,7 @@ module.exports = {
 \n> Do not attempt to find loopholes in these rules or bypass the auto-mod system. Repeatedly almost violating the rules or 'Toeing the line' is not permitted.
 \n🔶 **The staff team reserves the right to make any decision they see fit to keep the server running smoothly.**
 \n> “Not breaking any of the rules” does not excuse you from purposefully degrading the server’s quality.
-\n> If you believe that a staff member is being abusive towards others or possibly you then please DM any of the admins or [create a ticket](https://discord.com/channels/990527994969874493/1041770584125747220/1041771975539949618) right away to resolve the issue at hand.`
+\n> If you believe that a staff member is being abusive towards others or possibly you then please DM create a Ticket by clicking "contact staff" right away to resolve the issue at hand.`
 
 const text2 = 
 `

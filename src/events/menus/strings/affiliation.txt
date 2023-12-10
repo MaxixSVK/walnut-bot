@@ -1,11 +1,13 @@
-:large_blue_diamond: Series should preferably be based of a Light Novel/Manga/Anime.
-:large_blue_diamond: There should be a mutual connection between the server, reddit and wiki database.
-:large_blue_diamond: The server rules must be proper and must follow Discord TOS & Guidelines
-:large_blue_diamond: 300 minimum server members
-HOW TO APPLY
+:small_orange_diamond: Series should preferably be based of a Light Novel/Manga/Anime.
+:small_orange_diamond: There should be a mutual connection between the server, reddit and wiki database.
+:small_orange_diamond: The server rules must be proper and must follow Discord TOS & Guidelines
+:small_orange_diamond: 300 minimum server members
+
+**HOW TO APPLY**
 In order to apply for an affiliation, you can choose between either DMing one of our admins, or you can create a ticket through ⁠contact staff button. After your ticket is made, a staff member will get in contact with you shortly.
 
-FORMAT
+**FORMAT**
+
 :small_blue_diamond:Name of the series.
 :small_blue_diamond:Story Synopsis (Preferably a short synopsis)
 :small_blue_diamond:Links

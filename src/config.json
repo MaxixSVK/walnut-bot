@@ -2,10 +2,10 @@
     "CommandsListOnStartup": false,
     "Color": "#D78B84",
     "StaffRole": "990527994990854175",
-    "Walnutrole": "1075813917688869027",
+    "Walnutrole": "Walnut",
     "UnverifiedRole": "1014411262916046869",
     "RulesChannel": "rules-and-info",
     "WelcomeChannel": "welcome-feed",
-    "transcriptChannel": "transcripts",
+    "transcriptChannel": "transcripts-logs",
     "CustomStatus": "Hacking DA"
 }

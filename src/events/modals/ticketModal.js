@@ -1,5 +1,4 @@
 const { Events, EmbedBuilder, ChannelType, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
-const config = require('../../config.json');
 const uniqid = require('uniqid');
 
 module.exports = {

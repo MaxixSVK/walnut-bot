@@ -7,8 +7,8 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === 'ticketModal') {
-            const staffRoleID = config.StaffRole;
-            const walnutRoleID = config.Walnutrole;
+            const staffRoleID = interaction.client.config.staffRole;
+            const walnutRoleID = interaction.client.config.walnutId;
             const ticketId = uniqid();
             const channelName = `ticket-${ticketId}`
 
@@ -46,7 +46,7 @@ module.exports = {
 
             const ticketEmbed = new EmbedBuilder()
                 .setTitle('The ticket has been created')
-                .setColor(config.Color)
+                .setColor(interaction.client.config.color)
                 .addFields(
                     { name: 'Ticket\'s name:', value: titleImput, inline: false },
                     { name: 'Ticket\'s description:', value: dscImput, inline: false },

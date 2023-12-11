@@ -1,11 +1,11 @@
 {
-    "CommandsListOnStartup": false,
-    "Color": "#D78B84",
-    "StaffRole": "1178341975964012645",
-    "Walnutrole": "1075813917688869027",
-    "UnverifiedRole": "1014411262916046869",
-    "RulesChannel": "rules-and-info",
-    "WelcomeChannel": "welcome-feed",
+    "commandsListOnStartup": false,
+    "color": "#D78B84",
+    "walnutId": "1075813917688869027",
+    "staffRole": "1178341975964012645",
+    "unverifiedRole": "1014411262916046869",
+    "rulesChannel": "990527996043603971",
+    "welcomeChannel": "1041596728996003912",
     "transcriptChannel": "1041771433145159721",
-    "CustomStatus": "Hacking DA"
+    "customStatus": "Hacking DA"
 }

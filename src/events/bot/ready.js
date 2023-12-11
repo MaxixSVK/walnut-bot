@@ -1,6 +1,5 @@
 const { Events, ActivityType } = require('discord.js');
 const mongoose = require('mongoose');
-const config = require('../../config.json');
 const path = require('path');
 const fs = require('fs');
 
@@ -8,7 +7,7 @@ module.exports = {
     name: Events.ClientReady,
     once: true,
     execute(client) {
-        if (config.CommandsListOnStartup) {
+        if (client.config.commandsListOnStartup) {
             console.log('[INFO] Loaded commands:')
             console.log('----------------------------------')
             const folders = fs.readdirSync(path.join(__dirname, '../../commands'));
@@ -21,17 +20,19 @@ module.exports = {
             console.log('----------------------------------')
         }
 
-        try {
-            mongoose.connect(process.env.MongoDB).then(() => console.log('[INFO] Connected to MongoDB\nsuccessfully finished startup'));
-        } catch (error) {
-            console.log('[INFO] Couldn\'t connect to MongoDB')
-            return
-        }
+        mongoose.connect(process.env.MongoDB);
+        const db = mongoose.connection;
+        
+        db.on('error', console.error.bind(console, '[INFO] Couldn\'t connect to MongoDB\n'));
+        db.once('open', () => {
+            console.log('[INFO] Connected to MongoDB');
+            console.log('successfully finished startup');
+        });
 
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({
             activities: [{
-                name: config.CustomStatus,
+                name: client.config.customStatus,
                 type: ActivityType.Custom
             }],
             status: 'online'

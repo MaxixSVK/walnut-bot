@@ -1,6 +1,5 @@
 const { Events } = require('discord.js');
 const discordTranscripts = require('discord-html-transcripts');
-const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -8,7 +7,7 @@ module.exports = {
         if (!interaction.isButton()) return;
         if (interaction.customId === 'transcriptAndDeletetTicket') {
             const ticketChannel = interaction.channel
-            const transcriptChannel = interaction.guild.channels.cache.get(config.transcriptChannel);
+            const transcriptChannel = interaction.guild.channels.cache.get(interaction.client.config.transcriptChannel);
 
             const attachment = await discordTranscripts.createTranscript(ticketChannel, {saveImages: true, poweredBy: false,});
             transcriptChannel.send({ content: `Transcript of ticket: ${ticketChannel.name}`, files: [attachment] });

@@ -1,6 +1,5 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const verifySchema = require('../../schemas/verificationSchema');
-const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -20,10 +19,9 @@ module.exports = {
                 const verifyEmbed = new EmbedBuilder()
                     .setColor('Green')
                     .setTitle('Verification completed')
-                    .setDescription(`Enjoy your time on a server`)
+                    .setDescription('Enjoy your time on a server')
 
-                const guild = interaction.guild;
-                const verifyRole = config.UnverifiedRole;
+                const verifyRole = interaction.client.config.unverifiedRole;
                 const member = interaction.member;
                 const memberId = interaction.user.id;
 
@@ -35,7 +33,7 @@ module.exports = {
                 const noverifyEmbed = new EmbedBuilder()
                     .setColor('Red')
                     .setTitle('Verification was not completed')
-                    .setDescription(`You entered wrong captcha please try again.`)
+                    .setDescription('You entered wrong captcha please try again.')
 
                 interaction.reply({ embeds: [noverifyEmbed], ephemeral: true })
             }

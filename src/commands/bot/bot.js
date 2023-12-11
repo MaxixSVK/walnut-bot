@@ -1,6 +1,4 @@
 const { SlashCommandBuilder ,EmbedBuilder } = require('discord.js');
-const config = require('../../config.json');
-const information = require('../../../package.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,11 +6,11 @@ module.exports = {
         .setDescription('Informations about Walnut'),
     async execute(interaction) {
         const botEmbed = new EmbedBuilder()
-            .setColor(config.Color)
+            .setColor(interaction.client.config.color)
             .setTitle('Walnut')
             .setURL('https://github.com/MaxixSVK/walnut-bot')
             .addFields(
-                { name: ':speech_balloon: Version:', value: information.version , inline: true },
+                { name: ':speech_balloon: Version:', value: interaction.client.information.version , inline: true },
                 { name: ':busts_in_silhouette: Author:', value: 'Maxix', inline: true },
             )
             .setImage('https://i.imgur.com/NvxcmjO.png')

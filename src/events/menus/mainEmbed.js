@@ -1,5 +1,4 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const config = require('../../config.json');
 const path = require('path');
 const fs = require('fs');
 
@@ -20,11 +19,11 @@ module.exports = {
                 fs.readFile(path.join(__dirname, 'strings/server.txt'), 'utf8', function (err, data) {
                     if (err) throw err;
                     const imgEmbed = new EmbedBuilder()
-                        .setColor(config.Color)
+                        .setColor(interaction.client.config.color)
                         .setImage('https://i.imgur.com/VrqxmXm.png')
 
                     const txtEmbed = new EmbedBuilder()
-                        .setColor(config.Color)
+                        .setColor(interaction.client.config.color)
                         .setTitle('About us')
                         .setDescription(data)
 
@@ -37,7 +36,7 @@ module.exports = {
                 fs.readFile(path.join(__dirname, 'strings/strike.txt'), 'utf8', function (err, data) {
                     if (err) throw err;
                     const txtEmbed = new EmbedBuilder()
-                        .setColor(config.Color)
+                        .setColor(interaction.client.config.color)
                         .setTitle('Strike system')
                         .setDescription(data)
 
@@ -57,11 +56,11 @@ module.exports = {
                 fs.readFile(path.join(__dirname, 'strings/affiliation.txt'), 'utf8', function (err, data) {
                     if (err) throw err;
                     const imgEmbed = new EmbedBuilder()
-                        .setColor(config.Color)
+                        .setColor(interaction.client.config.color)
                         .setImage('https://i.imgur.com/TvwOxUH.png')
 
                     const txtEmbed = new EmbedBuilder()
-                        .setColor(config.Color)
+                        .setColor(interaction.client.config.color)
                         .setTitle('Affiliations')
                         .setDescription(data)
 

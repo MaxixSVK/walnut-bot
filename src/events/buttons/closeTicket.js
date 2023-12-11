@@ -1,5 +1,4 @@
 const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, PermissionsBitField } = require('discord.js');
-const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -8,8 +7,8 @@ module.exports = {
         if (interaction.customId === 'closeTicket') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const staffRoleID = config.StaffRole;
-            const walnutRoleID = config.Walnutrole;
+            const staffRoleID = interaction.client.config.staffRole;
+            const walnutRoleID = interaction.client.config.walnutId;
 
             if (member.roles.cache.has(staffRoleID)) {
 

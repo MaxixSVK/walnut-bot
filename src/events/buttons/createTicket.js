@@ -24,7 +24,6 @@ module.exports = {
             const secondActionRow = new ActionRowBuilder().addComponents(dscInput);
 
             ticketModal.addComponents(firstActionRow, secondActionRow);
-
             await interaction.showModal(ticketModal);
         }
     }

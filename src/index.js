@@ -1,4 +1,6 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const information = require('./../package.json');
+const config = require('./config.json');
 require('dotenv').config()
 
 const client = new Client({
@@ -8,6 +10,8 @@ const client = new Client({
     ]
 });
 
+client.config = config;
+client.information = information;
 client.commands = new Collection();
 
 require('./handlers/commandHandler')(client);

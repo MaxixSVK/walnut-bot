@@ -1,5 +1,4 @@
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
-const config = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,20 +7,20 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
         const InfoButtons = new ActionRowBuilder()
-        .addComponents(
-            new ButtonBuilder()
-                .setCustomId('verifyMenuButton')
-                .setLabel('Verify')
-                .setEmoji('✅')
-                .setStyle(ButtonStyle.Secondary),
-        )
-        .addComponents(
-            new ButtonBuilder()
-                .setCustomId('ticket')
-                .setLabel('Contact Staff')
-                .setEmoji('997584350407295178')
-                .setStyle(ButtonStyle.Secondary),
-        )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('verifyMenuButton')
+                    .setLabel('Verify')
+                    .setEmoji('✅')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('ticket')
+                    .setLabel('Contact Staff')
+                    .setEmoji('997584350407295178')
+                    .setStyle(ButtonStyle.Secondary),
+            )
 
         const menuContent = [
             {
@@ -61,7 +60,7 @@ module.exports = {
                 emoji: '997605599531507873',
             },
         ];
-        
+
         const selectMenu = new StringSelectMenuBuilder()
             .setCustomId('setupMenu')
             .setPlaceholder('Make a selection')
@@ -79,8 +78,8 @@ module.exports = {
 
         const actionRow = new ActionRowBuilder().addComponents(selectMenu)
 
-        const text1 =                
-`🔶 **Follow the Discord Terms of Services & Guidelines.**
+        const text1 =
+            `🔶 **Follow the Discord Terms of Services & Guidelines.**
 \n🔹**[Discord Terms](https://discord.com/terms)**
 **🔹[Discord Guidelines](https://discord.com/guidelines)**
 \n> Severe violations will result in an immediate ban. This includes but is not limited to being under the age of 13, Modification of client & Raiding.
@@ -105,8 +104,8 @@ module.exports = {
 \n> “Not breaking any of the rules” does not excuse you from purposefully degrading the server’s quality.
 \n> If you believe that a staff member is being abusive towards others or possibly you then please DM create a Ticket by clicking "contact staff" right away to resolve the issue at hand.`
 
-const text2 = 
-`
+        const text2 =
+            `
 **In order to gain access to our server and start chatting, please use the selection menu below.**
 \nPlease note that when you choose to verify, you also accept our rules and conditions. Excuses such as \`I did not know there were rules.\` or \`I did not read the rules.\` will not be accepted as valid excuses.
 `
@@ -126,11 +125,12 @@ const text2 =
             .setDescription(`${text2}`)
 
         const setupEmbed = new EmbedBuilder()
-        .setColor('Green')
-        .setTitle('Setup has been completed')
+            .setColor('Green')
+            .setTitle('Setup has been completed')
 
-        const channel = interaction.guild.channels.cache.find(channel => channel.name == config.RulesChannel);
+        const channel = interaction.client.channels.cache.get(interaction.client.config.rulesChannel);
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
+        
         interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
 }

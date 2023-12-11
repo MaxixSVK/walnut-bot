@@ -1,5 +1,4 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const config = require("../../config.json");
 
 module.exports = {
     name: Events.GuildMemberAdd,
@@ -15,18 +14,18 @@ module.exports = {
         ];
 
         const members = member.guild.memberCount
-        const verifyRole = config.UnverifiedRole;
+        const verifyRole = member.client.config.unverifiedRole;
 
         await member.roles.add(verifyRole);
 
         const welcomeEmbed = new EmbedBuilder()
             .setTitle('Welcome to Café LycoReco!')
             .setDescription(`Please make sure to read our <#990527996043603971> page and for everything you need to know about our server, and gain access to our chats once you are ready!`)
-            .setColor(config.Color)
+            .setColor(member.client.config.color)
             .setImage([random(images)].toString())
             .setFooter({ text: `Customer Number: ${members}` });
 
-        const channel = member.guild.channels.cache.find(channel => channel.name == config.WelcomeChannel);
+        const channel = member.client.channels.cache.get(member.client.config.welcomeChannel);
         channel.send({ content: `Hello ${member}! May we take your order?`, embeds: [welcomeEmbed] });
 
     }

@@ -1,5 +1,4 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
-const config = require('../../config.json');
 const uniqid = require('uniqid');
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
         .setName('Report message')
         .setType(ApplicationCommandType.Message),
     async execute(interaction) {
-        const roleId = config.StaffRole;
+        const roleId = interaction.client.config.staffRole;
         const reportId = uniqid();
         const channelName = `report-${reportId}`
 
@@ -33,7 +32,7 @@ module.exports = {
         const reportedEmbed = new EmbedBuilder()
             .setTitle(`The message has been reported`)
             .setDescription(`<@${interaction.member.id}> reported a message.\n Content of the message was verifiend`)
-            .setColor(config.Color)
+            .setColor(interaction.client.config.color)
             .addFields(
                 { name: 'Who\'s message has been reported:', value: `${interaction.targetMessage.author}`, inline: false },
                 { name: 'Reported message:', value: `${interaction.targetMessage.content}`, inline: false },

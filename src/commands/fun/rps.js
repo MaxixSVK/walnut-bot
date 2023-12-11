@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const config = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -33,7 +32,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`Let's play RPS`)
             .setDescription('Now you can play rock paper scissors with Walnut')
-            .setColor(config.Color)
+            .setColor(interaction.client.config.color)
 
         await interaction.reply({ embeds: [embed], components: [buttons], ephemeral: true });
     },

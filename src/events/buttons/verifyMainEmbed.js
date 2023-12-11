@@ -1,7 +1,6 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require('captcha-canvas');
 const verifySchema = require('../../schemas/verificationSchema');
-const config = require('../../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -10,7 +9,7 @@ module.exports = {
         if (interaction.customId === 'verifyMenuButton') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = config.UnverifiedRole;
+            const role = interaction.client.config.unverifiedRole;
 
             if (member.roles.cache.has(role)) {
 

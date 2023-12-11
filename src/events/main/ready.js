@@ -22,7 +22,7 @@ module.exports = {
         }
 
         try {
-            mongoose.connect(process.env.MongoDB).then(() => console.log('[INFO] Connected to MongoDB'));
+            mongoose.connect(process.env.MongoDB).then(() => console.log('[INFO] Connected to MongoDB\nsuccessfully finished startup'));
         } catch (error) {
             console.log('[INFO] Couldn\'t connect to MongoDB')
             return

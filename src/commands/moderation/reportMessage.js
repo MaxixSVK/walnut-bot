@@ -4,7 +4,8 @@ const uniqid = require('uniqid');
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Report message')
-        .setType(ApplicationCommandType.Message),
+        .setType(ApplicationCommandType.Message)
+        .setDMPermission(false),
     async execute(interaction) {
         const roleId = interaction.client.config.staffRole;
         const reportId = uniqid();

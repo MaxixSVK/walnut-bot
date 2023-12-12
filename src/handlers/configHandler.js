@@ -2,8 +2,10 @@ const information = require('./../../package.json');
 const config = require('./../../config.json');
 
 module.exports = (client) => {
-    client.config = config;
-    client.information = information;
-    
+    Object.assign(client, {
+        information,
+        config
+    });
+
     console.log('[INFO] Loaded config handler');
 };

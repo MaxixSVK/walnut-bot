@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-let verifySchema = new Schema({
+const verifySchema = new mongoose.Schema({
     id: String,
     captcha: String,
 })
 
-module.exports = model('verification', verifySchema)
+module.exports = mongoose.model('verification', verifySchema)

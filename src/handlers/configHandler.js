@@ -1,5 +1,5 @@
 const information = require('./../../package.json');
-const config = require('./../config.json');
+const config = require('./../../config.json');
 
 module.exports = (client) => {
     client.config = config;

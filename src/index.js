@@ -12,9 +12,7 @@ const client = new Client({
 client.commands = new Collection();
 
 fs.readdirSync('./src/handlers').forEach((file) => {
-    if (file.endsWith('.js')) {
-        require(`./handlers/${file}`)(client);
-    }
+    require(`./handlers/${file}`)(client);
 });
 
 client.login(process.env.token);

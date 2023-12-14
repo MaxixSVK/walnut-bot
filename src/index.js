@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const fs = require('fs');
 require('dotenv').config()
 
 const client = new Client({
@@ -10,6 +11,10 @@ const client = new Client({
 });
 client.commands = new Collection();
 
-require('./handlers/handler')(client);
+fs.readdirSync('./src/handlers').forEach((file) => {
+    if (file.endsWith('.js')) {
+        require(`./handlers/${file}`)(client);
+    }
+});
 
 client.login(process.env.token);

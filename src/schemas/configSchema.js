@@ -5,6 +5,8 @@ const verifySchema = new mongoose.Schema({
     mainChannelId: String,
     welcomeChannelId: String,
     transcriptChannelId: String,
+    staffRoleId: String,
+    unverifiedRoleId: String,
 })
 
 module.exports = mongoose.model('config', verifySchema)

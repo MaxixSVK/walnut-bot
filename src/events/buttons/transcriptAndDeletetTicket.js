@@ -6,15 +6,29 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isButton()) return;
         if (interaction.customId === 'transcriptAndDeletetTicket') {
-            const ticketChannel = interaction.channel
-            const transcriptChannel = interaction.guild.channels.cache.get(interaction.client.config.transcriptChannel);
+            const guildId = interaction.guild.id
+            const configSchema = interaction.client.configSchema
+    
+            const configSchemaData = await configSchema.find({
+                guildId: guildId
+            });
+    
+            if (!configSchemaData.length == 0) {
+                const channelId = configSchemaData.map(item => item.transcriptChannelId).toString()
+                const transcriptChannel = interaction.client.channels.cache.get(channelId);
+                const ticketChannel = interaction.channel
+    
+                const attachment = await discordTranscripts.createTranscript(ticketChannel, {saveImages: true, poweredBy: false,});
+                transcriptChannel.send({ content: `Transcript of ticket: ${ticketChannel.name}`, files: [attachment] });
+    
+                interaction.reply('Transcript saved, channel deletion in progress')
+                
+                ticketChannel.delete()
+            }
+            else {
+                return interaction.reply({ content: 'Please complete channel setup first', ephemeral: true });
+            }
 
-            const attachment = await discordTranscripts.createTranscript(ticketChannel, {saveImages: true, poweredBy: false,});
-            transcriptChannel.send({ content: `Transcript of ticket: ${ticketChannel.name}`, files: [attachment] });
-
-            interaction.reply('Transcript saved, channel deletion in progress')
-            
-            ticketChannel.delete()
         }
     }
 }

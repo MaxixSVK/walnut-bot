@@ -7,7 +7,7 @@ module.exports = {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === 'ticketModal') {
             const staffRoleID = interaction.client.config.staffRole;
-            const walnutRoleID = interaction.client.config.walnutId;
+            const walnutID = interaction.client.user.id;
             const ticketId = uniqid();
             const channelName = `ticket-${ticketId}`
 
@@ -28,7 +28,7 @@ module.exports = {
                         allow: [PermissionsBitField.Flags.ViewChannel],
                     },
                     {
-                        id: walnutRoleID,
+                        id: walnutID,
                         allow: [PermissionsBitField.Flags.ViewChannel],
                     },
                 ],

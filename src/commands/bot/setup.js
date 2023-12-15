@@ -129,9 +129,23 @@ module.exports = {
             .setColor('Green')
             .setTitle('Setup has been completed')
 
-        const channel = interaction.client.channels.cache.get(interaction.client.config.rulesChannel);
-        channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
-        
-        interaction.reply({ embeds: [setupEmbed], ephemeral: true });
+        const guildId = interaction.guild.id
+        const configSchema = interaction.client.configSchema
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        if (!configSchemaData.length == 0) {
+            const channelId = configSchemaData.map(item => item.mainChannelId).toString()
+            const channel = interaction.client.channels.cache.get(channelId);
+
+            channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
+
+            interaction.reply({ embeds: [setupEmbed], ephemeral: true });
+        }
+        else {
+            return interaction.reply({ content: 'Please complete channel setup first', ephemeral: true });
+        }
     }
 }

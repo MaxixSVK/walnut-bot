@@ -8,7 +8,7 @@ module.exports = {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
             const staffRoleID = interaction.client.config.staffRole;
-            const walnutRoleID = interaction.client.config.walnutId;
+            const walnutID = interaction.client.user.id;
 
             if (member.roles.cache.has(staffRoleID)) {
 
@@ -22,7 +22,7 @@ module.exports = {
                         allow: [PermissionsBitField.Flags.ViewChannel],
                     },
                     {
-                        id: walnutRoleID,
+                        id: walnutID,
                         allow: [PermissionsBitField.Flags.ViewChannel],
                     },
                 ]);

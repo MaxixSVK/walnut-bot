@@ -25,8 +25,20 @@ module.exports = {
             .setImage([random(images)].toString())
             .setFooter({ text: `Customer Number: ${members}` });
 
-        const channel = member.client.channels.cache.get(member.client.config.welcomeChannel);
-        channel.send({ content: `Hello ${member}! May we take your order?`, embeds: [welcomeEmbed] });
+        const guildId = member.guild.id
+        const configSchema = member.client.configSchema
 
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        if (!configSchemaData.length == 0) {
+            const channelId = configSchemaData.map(item => item.welcomeChannelId).toString()
+            const channel = member.client.channels.cache.get(channelId);
+            channel.send({ content: `Hello ${member}! May we take your order?`, embeds: [welcomeEmbed] });
+        }
+        else {
+            return;
+        }
     }
 }

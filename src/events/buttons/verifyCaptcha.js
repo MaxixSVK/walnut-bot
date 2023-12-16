@@ -7,29 +7,40 @@ module.exports = {
         if (interaction.customId === 'verifyEmbedButton') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = interaction.client.config.unverifiedRole;
+            const guildId = member.guild.id
+            const configSchema = member.client.configSchema
 
-            if (member.roles.cache.has(role)) {
-                const captchaModal = new ModalBuilder()
-                    .setCustomId('captchaModal')
-                    .setTitle('Captcha')
+            const configSchemaData = await configSchema.find({
+                guildId: guildId
+            });
 
-                const captchaInput = new TextInputBuilder()
-                    .setCustomId('captchaInput')
-                    .setLabel('Please enter captcha text')
-                    .setStyle(TextInputStyle.Short);
+            if (!configSchemaData.length == 0) {
+                const role = configSchemaData.map(item => item.unverifiedRoleId).toString()
+                if (member.roles.cache.has(role)) {
+                    const captchaModal = new ModalBuilder()
+                        .setCustomId('captchaModal')
+                        .setTitle('Captcha')
 
-                const actionRow = new ActionRowBuilder().addComponents(captchaInput);
-                captchaModal.addComponents(actionRow);
-                await interaction.showModal(captchaModal);
+                    const captchaInput = new TextInputBuilder()
+                        .setCustomId('captchaInput')
+                        .setLabel('Please enter captcha text')
+                        .setStyle(TextInputStyle.Short);
+
+                    const actionRow = new ActionRowBuilder().addComponents(captchaInput);
+                    captchaModal.addComponents(actionRow);
+                    await interaction.showModal(captchaModal);
+                }
+                else {
+                    const embed = new EmbedBuilder()
+                        .setTitle('Already verified')
+                        .setDescription('You are already verified on this server')
+                        .setColor('Orange')
+
+                    interaction.reply({ embeds: [embed], ephemeral: true })
+                }
             }
             else {
-                const embed = new EmbedBuilder()
-                    .setTitle('Already verified')
-                    .setDescription('You are already verified on this server')
-                    .setColor('Orange')
-                    
-                interaction.reply({ embeds: [embed], ephemeral: true })
+                return interaction.reply({ content: 'Setup has not been completed', ephemeral: true });
             }
         }
     }

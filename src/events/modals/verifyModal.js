@@ -5,7 +5,7 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === 'captchaModal') {
-            const verifySchema = member.client.verifySchema
+            const verifySchema = interaction.client.verifySchema
 
             const userImput = interaction.fields.getTextInputValue('captchaInput').toUpperCase();
 
@@ -21,7 +21,8 @@ module.exports = {
                     .setTitle('Verification completed')
                     .setDescription('Enjoy your time on a server')
 
-                const configSchema = member.client.configSchema
+                const configSchema = interaction.client.configSchema
+                const guildId = interaction.guild.id
 
                 const configSchemaData = await configSchema.find({
                     guildId: guildId
@@ -31,7 +32,10 @@ module.exports = {
                 const member = interaction.member;
                 const memberId = interaction.user.id;
 
-                await verifySchema.deleteMany({ id: memberId })
+                await verifySchema.deleteMany({ 
+                    guildId: guildId,
+                    id: memberId 
+                })
                 await member.roles.remove(verifyRole);
                 interaction.reply({ embeds: [verifyEmbed], ephemeral: true })
             }

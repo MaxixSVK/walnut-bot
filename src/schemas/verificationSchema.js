@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const verifySchema = new mongoose.Schema({
+    guildId: String,
     id: String,
     captcha: String,
 })

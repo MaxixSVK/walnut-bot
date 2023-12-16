@@ -1,11 +1,11 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const verifySchema = require('../../schemas/verificationSchema');
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isModalSubmit()) return;
         if (interaction.customId === 'captchaModal') {
+            const verifySchema = member.client.verifySchema
 
             const userImput = interaction.fields.getTextInputValue('captchaInput').toUpperCase();
 
@@ -21,7 +21,13 @@ module.exports = {
                     .setTitle('Verification completed')
                     .setDescription('Enjoy your time on a server')
 
-                const verifyRole = interaction.client.config.unverifiedRole;
+                const configSchema = member.client.configSchema
+
+                const configSchemaData = await configSchema.find({
+                    guildId: guildId
+                });
+
+                const verifyRole = configSchemaData.map(item => item.unverifiedRoleId).toString()
                 const member = interaction.member;
                 const memberId = interaction.user.id;
 

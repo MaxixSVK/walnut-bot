@@ -12,7 +12,7 @@ module.exports = {
         });
 
         if (!configSchemaData.length == 0) {
-            const verifyRole = member.client.config.unverifiedRole;
+            const verifyRole = configSchemaData.map(item => item.unverifiedRoleId).toString()
             await member.roles.add(verifyRole);
 
             const random = (arr) => arr[Math.floor(Math.random() * arr.length)];

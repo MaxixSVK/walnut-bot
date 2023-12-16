@@ -1,6 +1,5 @@
 const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require('captcha-canvas');
-const verifySchema = require('../../schemas/verificationSchema');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -9,55 +8,70 @@ module.exports = {
         if (interaction.customId === 'verifyMenuButton') {
             const guild = interaction.guild;
             const member = guild.members.cache.get(interaction.user.id);
-            const role = interaction.client.config.unverifiedRole;
+            const configSchema = member.client.configSchema
 
-            if (member.roles.cache.has(role)) {
+            const configSchemaData = await configSchema.find({
+                guildId: guild.id
+            });
 
-                const button = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId('verifyEmbedButton')
-                            .setLabel('Start verification')
-                            .setEmoji('994615569833791498')
-                            .setStyle(ButtonStyle.Primary),
-                    )
+            if (!configSchemaData.length == 0) {
+                const role = configSchemaData.map(item => item.unverifiedRoleId).toString()
+                if (member.roles.cache.has(role)) {
 
-                const captcha = new CaptchaGenerator()
-                const buffer = captcha.generateSync();
-                const captchaImage = new AttachmentBuilder(buffer, { name: 'captcha.png' })
+                    const button = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId('verifyEmbedButton')
+                                .setLabel('Start verification')
+                                .setEmoji('994615569833791498')
+                                .setStyle(ButtonStyle.Primary),
+                        )
 
-                const firstembed = new EmbedBuilder()
-                    .setTitle('Solve this captcha to gain acces to LycoReco Café!')
-                    .setColor('#E51468')
-                    .setImage(`attachment://captcha.png`)
+                    const captcha = new CaptchaGenerator()
+                    const buffer = captcha.generateSync();
+                    const captchaImage = new AttachmentBuilder(buffer, { name: 'captcha.png' })
 
-                const data = await verifySchema.find({
-                    id: interaction.user.id
-                });
+                    const firstembed = new EmbedBuilder()
+                        .setTitle('Solve this captcha to gain acces to LycoReco Café!')
+                        .setColor('#E51468')
+                        .setImage(`attachment://captcha.png`)
 
-                const memberId = interaction.user.id
-                if (!data.length == 0) {
-                    await verifySchema.deleteMany({ id: memberId })
-                    await verifySchema.create({
-                        id: memberId,
-                        captcha: captcha.text
+                    const verifySchema = member.client.verifySchema
+
+                    const data = await verifySchema.find({
+                        guildId: guild.id,
+                        id: interaction.user.id
                     });
+
+                    const memberId = interaction.user.id
+                    if (!data.length == 0) {
+                        await verifySchema.deleteMany({ id: memberId })
+                        await verifySchema.create({
+                            guildId: guild.id,
+                            id: memberId,
+                            captcha: captcha.text
+                        });
+                    }
+                    else {
+                        await verifySchema.create({
+                            guildId: guild.id,
+                            id: memberId,
+                            captcha: captcha.text
+                        });
+                    }
+
+                    interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
                 }
                 else {
-                    await verifySchema.create({
-                        id: memberId,
-                        captcha: captcha.text
-                    });
+                    const embed = new EmbedBuilder()
+                        .setTitle('Already verified')
+                        .setDescription('You are already verified on this server')
+                        .setColor('Orange')
+                    interaction.reply({ embeds: [embed], ephemeral: true })
                 }
-
-                interaction.reply({ embeds: [firstembed], files: [captchaImage], components: [button], ephemeral: true })
             }
             else {
-                const embed = new EmbedBuilder()
-                .setTitle('Already verified')
-                .setDescription('You are already verified on this server')
-                .setColor('Orange')
-                interaction.reply({ embeds: [embed], ephemeral: true })
+                return interaction.reply({ content: 'Setup has not been completed', ephemeral: true });
             }
         }
     }

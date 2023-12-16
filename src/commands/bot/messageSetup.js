@@ -2,8 +2,8 @@ const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMen
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('setup')
-        .setDescription('just a setup command')
+        .setName('message-setup')
+        .setDescription('Setup message in rules and info channel')
         .setDMPermission(false)
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
@@ -79,8 +79,8 @@ module.exports = {
 
         const actionRow = new ActionRowBuilder().addComponents(selectMenu)
 
-        const text1 =
-            `🔶 **Follow the Discord Terms of Services & Guidelines.**
+        const text1 = `
+🔶 **Follow the Discord Terms of Services & Guidelines.**
 \n🔹**[Discord Terms](https://discord.com/terms)**
 **🔹[Discord Guidelines](https://discord.com/guidelines)**
 \n> Severe violations will result in an immediate ban. This includes but is not limited to being under the age of 13, Modification of client & Raiding.
@@ -105,11 +105,9 @@ module.exports = {
 \n> “Not breaking any of the rules” does not excuse you from purposefully degrading the server’s quality.
 \n> If you believe that a staff member is being abusive towards others or possibly you then please DM create a Ticket by clicking "contact staff" right away to resolve the issue at hand.`
 
-        const text2 =
-            `
+        const text2 = `
 **In order to gain access to our server and start chatting, please use the selection menu below.**
-\nPlease note that when you choose to verify, you also accept our rules and conditions. Excuses such as \`I did not know there were rules.\` or \`I did not read the rules.\` will not be accepted as valid excuses.
-`
+\nPlease note that when you choose to verify, you also accept our rules and conditions. Excuses such as \`I did not know there were rules.\` or \`I did not read the rules.\` will not be accepted as valid excuses.`
 
         const firstembed = new EmbedBuilder()
             .setColor('#E51468')

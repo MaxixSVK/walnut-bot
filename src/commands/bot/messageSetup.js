@@ -128,8 +128,8 @@ module.exports = {
             .setTitle('Setup completed')
             .setDescription('Setup completed successfully, message sent')
 
-        const configSchema = interaction.client.configSchema
-        const guildId = interaction.guild.id
+        const configSchema = interaction.client.configSchema;
+        const guildId = interaction.guild.id;
 
         const configSchemaData = await configSchema.find({
             guildId: guildId
@@ -150,4 +150,4 @@ module.exports = {
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [selectMenuRow, InfoButtons] });
         interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
-}
+};

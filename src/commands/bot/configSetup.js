@@ -27,18 +27,40 @@ module.exports = {
             .setDescription('The role for unverified users')
             .setRequired(true)),
     async execute(interaction) {
-        function getId(type, name) {
-            return interaction.options[type](name).id;
+        const ids = [
+            {
+                name: 'mainChannelId',
+                type: 'getChannel',
+                commandOption: 'rules-and-info-channel'
+            },
+            {
+                name: 'welcomeChannelId',
+                type: 'getChannel',
+                commandOption: 'welcome-channel'
+            },
+            {
+                name: 'transcriptChannelId',
+                type: 'getChannel',
+                commandOption: 'transcript-channel'
+            },
+            {
+                name: 'staffRoleId',
+                type: 'getRole',
+                commandOption: 'staff-role'
+            },
+            {
+                name: 'unverifiedRoleId',
+                type: 'getRole',
+                commandOption: 'unverified-role'
+            }
+        ];
+
+        for (let i = 0; i < ids.length; i++) {
+            ids[i].id = interaction.options[ids[i].type](ids[i].commandOption).id;
         }
 
-        const mainChannelId = getId('getChannel', 'rules-and-info-channel');
-        const welcomeChannelId = getId('getChannel', 'welcome-channel');
-        const transcriptChannelId = getId('getChannel', 'transcript-channel');
-        const staffRoleId = getId('getRole', 'staff-role');
-        const unverifiedRoleId = getId('getRole', 'unverified-role');
-
-        const configSchema = interaction.client.configSchema
-        const guildId = interaction.guild.id
+        const configSchema = interaction.client.configSchema;
+        const guildId = interaction.guild.id;
 
         const configSchemaData = await configSchema.find({
             guildId: guildId
@@ -47,13 +69,20 @@ module.exports = {
         if (!configSchemaData.length == 0) {
             await configSchema.deleteMany({ guildId: guildId });
         }
+
+        const idObject = {};
+
+        for (let i = 0; i < ids.length; i++) {
+            idObject[ids[i].name] = ids[i].id;
+        }
+
         await configSchema.create({
             guildId: guildId,
-            mainChannelId: mainChannelId,
-            welcomeChannelId: welcomeChannelId,
-            transcriptChannelId: transcriptChannelId,
-            staffRoleId: staffRoleId,
-            unverifiedRoleId: unverifiedRoleId
+            mainChannelId: idObject.mainChannelId,
+            welcomeChannelId: idObject.welcomeChannelId,
+            transcriptChannelId: idObject.transcriptChannelId,
+            staffRoleId: idObject.staffRoleId,
+            unverifiedRoleId: idObject.unverifiedRoleId
         });
 
         const setupEmbed = new EmbedBuilder()
@@ -61,6 +90,6 @@ module.exports = {
             .setTitle('Setup completed')
             .setDescription('Setup completed successfully, database updated')
 
-        interaction.reply({ embeds: [setupEmbed], ephemeral: true })
+        interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
-}
+};

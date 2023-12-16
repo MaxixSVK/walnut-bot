@@ -55,10 +55,6 @@ module.exports = {
             }
         ];
 
-        for (let i = 0; i < ids.length; i++) {
-            ids[i].id = interaction.options[ids[i].type](ids[i].commandOption).id;
-        }
-
         const configSchema = interaction.client.configSchema;
         const guildId = interaction.guild.id;
 
@@ -66,23 +62,20 @@ module.exports = {
             guildId: guildId
         });
 
-        if (!configSchemaData.length == 0) {
+        if (configSchemaData.length) {
             await configSchema.deleteMany({ guildId: guildId });
         }
 
         const idObject = {};
 
         for (let i = 0; i < ids.length; i++) {
+            ids[i].id = interaction.options[ids[i].type](ids[i].commandOption).id;
             idObject[ids[i].name] = ids[i].id;
         }
 
         await configSchema.create({
             guildId: guildId,
-            mainChannelId: idObject.mainChannelId,
-            welcomeChannelId: idObject.welcomeChannelId,
-            transcriptChannelId: idObject.transcriptChannelId,
-            staffRoleId: idObject.staffRoleId,
-            unverifiedRoleId: idObject.unverifiedRoleId
+            ...idObject
         });
 
         const setupEmbed = new EmbedBuilder()

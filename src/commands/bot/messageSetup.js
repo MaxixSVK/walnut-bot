@@ -7,6 +7,22 @@ module.exports = {
         .setDMPermission(false)
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
+        const configSchema = interaction.client.configSchema;
+        const guildId = interaction.guild.id;
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        if (!configSchemaData.length) {
+            const errorEmbed = new EmbedBuilder()
+                .setColor('Red')
+                .setTitle('Error')
+                .setDescription('Please complete config setup first')
+
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
+        
         const InfoButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -127,22 +143,6 @@ module.exports = {
             .setColor('Green')
             .setTitle('Setup completed')
             .setDescription('Setup completed successfully, message sent')
-
-        const configSchema = interaction.client.configSchema;
-        const guildId = interaction.guild.id;
-
-        const configSchemaData = await configSchema.find({
-            guildId: guildId
-        });
-
-        if (configSchemaData.length == 0) {
-            const errorEmbed = new EmbedBuilder()
-                .setColor('Red')
-                .setTitle('Error')
-                .setDescription('Please complete config setup first')
-
-            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-        }
 
         const channelId = configSchemaData.map(item => item.mainChannelId).toString()
         const channel = interaction.client.channels.cache.get(channelId);

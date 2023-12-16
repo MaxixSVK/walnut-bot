@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -27,20 +27,24 @@ module.exports = {
             .setDescription('The role for unverified users')
             .setRequired(true)),
     async execute(interaction) {
-        const mainChannelId = interaction.options.getChannel('main-channel').id;
-        const welcomeChannelId = interaction.options.getChannel('welcome-channel').id;
-        const transcriptChannelId = interaction.options.getChannel('transcript-channel').id;
-        const staffRoleId = interaction.options.getRole('staff-role').id;
-        const unverifiedRoleId = interaction.options.getRole('unverified-role').id;
+        function getId(type, name) {
+            return interaction.options[type](name).id;
+        }
+
+        const mainChannelId = getId('getChannel', 'rules-and-info-channel');
+        const welcomeChannelId = getId('getChannel', 'welcome-channel');
+        const transcriptChannelId = getId('getChannel', 'transcript-channel');
+        const staffRoleId = getId('getRole', 'staff-role');
+        const unverifiedRoleId = getId('getRole', 'unverified-role');
 
         const configSchema = interaction.client.configSchema
         const guildId = interaction.guild.id
 
-        const data = await configSchema.find({
+        const configSchemaData = await configSchema.find({
             guildId: guildId
         });
 
-        if (!data.length == 0) {
+        if (!configSchemaData.length == 0) {
             await configSchema.deleteMany({ guildId: guildId });
         }
         await configSchema.create({
@@ -52,6 +56,11 @@ module.exports = {
             unverifiedRoleId: unverifiedRoleId
         });
 
-        interaction.reply({ content: 'Setup has been completed', ephemeral: true })
+        const setupEmbed = new EmbedBuilder()
+            .setColor('Green')
+            .setTitle('Setup completed')
+            .setDescription('Setup completed successfully, database updated')
+
+        interaction.reply({ embeds: [setupEmbed], ephemeral: true })
     }
 }

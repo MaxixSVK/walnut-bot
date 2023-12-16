@@ -77,7 +77,7 @@ module.exports = {
                 )
             )
 
-        const actionRow = new ActionRowBuilder().addComponents(selectMenu)
+        const selectMenuRow = new ActionRowBuilder().addComponents(selectMenu)
 
         const text1 = `
 🔶 **Follow the Discord Terms of Services & Guidelines.**
@@ -125,25 +125,29 @@ module.exports = {
 
         const setupEmbed = new EmbedBuilder()
             .setColor('Green')
-            .setTitle('Setup has been completed')
+            .setTitle('Setup completed')
+            .setDescription('Setup completed successfully, message sent')
 
-        const guildId = interaction.guild.id
         const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
 
         const configSchemaData = await configSchema.find({
             guildId: guildId
         });
 
-        if (!configSchemaData.length == 0) {
-            const channelId = configSchemaData.map(item => item.mainChannelId).toString()
-            const channel = interaction.client.channels.cache.get(channelId);
+        if (configSchemaData.length == 0) {
+            const errorEmbed = new EmbedBuilder()
+                .setColor('Red')
+                .setTitle('Error')
+                .setDescription('Please complete config setup first')
 
-            channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [actionRow, InfoButtons] });
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
 
-            interaction.reply({ embeds: [setupEmbed], ephemeral: true });
-        }
-        else {
-            return interaction.reply({ content: 'Please complete channel setup first', ephemeral: true });
-        }
+        const channelId = configSchemaData.map(item => item.mainChannelId).toString()
+        const channel = interaction.client.channels.cache.get(channelId);
+
+        channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [selectMenuRow, InfoButtons] });
+        interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
 }

@@ -3,28 +3,26 @@ const { Events, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton()) return;
-        if (interaction.customId === 'ticket') {
+        if (!interaction.isButton() || interaction.customId !== 'ticket') return;
 
-            const ticketModal = new ModalBuilder()
-                .setCustomId('ticketModal')
-                .setTitle('Contact staff team')
+        const ticketModal = new ModalBuilder()
+            .setCustomId('ticketModal')
+            .setTitle('Contact staff team')
 
-            const titleInput = new TextInputBuilder()
-                .setCustomId('titTicketleInput')
-                .setLabel('Please enter ticket name')
-                .setStyle(TextInputStyle.Short);
+        const titleInput = new TextInputBuilder()
+            .setCustomId('titTicketleInput')
+            .setLabel('Please enter ticket name')
+            .setStyle(TextInputStyle.Short);
 
-            const dscInput = new TextInputBuilder()
-                .setCustomId('dscTicketInput')
-                .setLabel('Please enter further context')
-                .setStyle(TextInputStyle.Paragraph);
+        const dscInput = new TextInputBuilder()
+            .setCustomId('dscTicketInput')
+            .setLabel('Please enter further context')
+            .setStyle(TextInputStyle.Paragraph);
 
-            const firstActionRow = new ActionRowBuilder().addComponents(titleInput);
-            const secondActionRow = new ActionRowBuilder().addComponents(dscInput);
+        const titleInputRow = new ActionRowBuilder().addComponents(titleInput);
+        const dscInputnRow = new ActionRowBuilder().addComponents(dscInput);
 
-            ticketModal.addComponents(firstActionRow, secondActionRow);
-            await interaction.showModal(ticketModal);
-        }
+        ticketModal.addComponents(titleInputRow, dscInputnRow);
+        await interaction.showModal(ticketModal);
     }
 }

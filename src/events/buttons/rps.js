@@ -4,61 +4,38 @@ module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
         if (!interaction.isButton()) return;
-        
-        const walnut = ['rock', 'paper', 'scissors',];
-        const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
-        let walnutFinal = [random(walnut)].toString()
 
-        const winnerEmbed = new EmbedBuilder()
-            .setTitle('You won')
-            .setDescription(`Congratulation, Walnut has chosen a ${walnutFinal}`)
-            .setColor('Green')
+        const choices = ['rock', 'paper', 'scissors'];
+        if (!choices.includes(interaction.customId)) return;
 
-        const looserEmbed = new EmbedBuilder()
-            .setTitle('You lost')
-            .setDescription(`Walnut has chosen a ${walnutFinal}`)
-            .setColor('Red')
+        const walnutChoice = choices[Math.floor(Math.random() * choices.length)];
 
-        const drawEmbed = new EmbedBuilder()
-            .setTitle('It\'s a draw')
-            .setDescription(`Walnut has chosen a ${walnutFinal}`)
-            .setColor('Orange')
+        const embeds = {
+            'rock': {
+                'rock': { title: 'It\'s a draw', color: 'Orange' },
+                'paper': { title: 'You lost', color: 'Red' },
+                'scissors': { title: 'You won', color: 'Green' }
+            },
+            'paper': {
+                'rock': { title: 'You won', color: 'Green' },
+                'paper': { title: 'It\'s a draw', color: 'Orange' },
+                'scissors': { title: 'You lost', color: 'Red' }
+            },
+            'scissors': {
+                'rock': { title: 'You lost', color: 'Red' },
+                'paper': { title: 'You won', color: 'Green' },
+                'scissors': { title: 'It\'s a draw', color: 'Orange' }
+            }
+        };
 
-        if (interaction.customId == 'rock') {
-            if (walnutFinal == 'rock') {
-                interaction.reply({ embeds: [drawEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'paper') {
-                interaction.reply({ embeds: [looserEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'scissors') {
-                interaction.reply({ embeds: [winnerEmbed], ephemeral: true })
-            }
-        }
+        const userChoice = interaction.customId;
+        const result = embeds[userChoice][walnutChoice];
 
-        if (interaction.customId == 'paper') {
-            if (walnutFinal == 'rock') {
-                interaction.reply({ embeds: [winnerEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'paper') {
-                interaction.reply({ embeds: [drawEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'scissors') {
-                interaction.reply({ embeds: [looserEmbed], ephemeral: true })
-            }
+        const resultEmbed = new EmbedBuilder()
+            .setTitle(result.title)
+            .setDescription(`Walnut has chosen ${walnutChoice}`)
+            .setColor(result.color);
 
-        }
-
-        if (interaction.customId == 'scissors') {
-            if (walnutFinal == 'rock') {
-                interaction.reply({ embeds: [looserEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'paper') {
-                interaction.reply({ embeds: [winnerEmbed], ephemeral: true })
-            }
-            if (walnutFinal == 'scissors') {
-                interaction.reply({ embeds: [drawEmbed], ephemeral: true })
-            }
-        }
+        interaction.reply({ embeds: [resultEmbed], ephemeral: true });
     }
-};
+}

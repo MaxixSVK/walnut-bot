@@ -1,5 +1,5 @@
 const { GiveawaysManager: gw } = require('discord-giveaways');
-const giveawayModel = require('../schemas/giveawaySchema');
+const giveawayModel = require('./../db/schemas/giveawaySchema');
 
 class GiveawaysManager extends gw {
     async getAllGiveaways() {

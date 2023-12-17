@@ -1,5 +1,4 @@
 const { Events, ActivityType } = require('discord.js');
-const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 
@@ -20,15 +19,6 @@ module.exports = {
             console.log('----------------------------------')
         }
 
-        mongoose.connect(process.env.MongoDB);
-        const db = mongoose.connection;
-        
-        db.on('error', console.error.bind(console, '[INFO] Couldn\'t connect to MongoDB\n'));
-        db.once('open', () => {
-            console.log('[INFO] Connected to MongoDB');
-            console.log('successfully finished startup');
-        });
-
         console.log(`[INFO] Logged in as ${client.user.tag}`);
         client.user.setPresence({
             activities: [{
@@ -37,5 +27,6 @@ module.exports = {
             }],
             status: 'online'
         });
+        console.log('successfully finished startup');
     }
 };

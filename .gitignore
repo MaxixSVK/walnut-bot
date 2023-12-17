@@ -1,6 +1,4 @@
-#secrets
 .env
 
-#another one
 package-lock.json
 node_modules/

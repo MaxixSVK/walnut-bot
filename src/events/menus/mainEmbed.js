@@ -1,77 +1,71 @@
 const { Events, EmbedBuilder } = require('discord.js');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs').promises;
 
 module.exports = {
     name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isStringSelectMenu()) return;
+        if (!interaction.isStringSelectMenu() || interaction.customId !== 'setupMenu') return;
 
-        if (interaction.customId === 'setupMenu') {
-            const samplemebed = new EmbedBuilder()
-                .setColor('Red')
-                .setTitle('Unavailable')
-                .setDescription(`Sorry, this section is currently unavailable,\n It will be updated with new information over time`)
+        async function createEmbed(title, description, image) {
+            const embed = new EmbedBuilder()
+                .setColor(interaction.client.config.color)
+                .setTitle(title)
+                .setDescription(description);
 
-            if (interaction.values == 'server') {
+            if (image) {
+                embed.setImage(image);
+            }
+            return embed;
+        }
+
+        const noDataEmebed = new EmbedBuilder()
+            .setColor('Red')
+            .setTitle('Unavailable')
+            .setDescription(`Sorry, this section is currently unavailable,\n It will be updated with new information over time`)
+
+        switch (interaction.values[0]) {
+            case 'server':
                 await interaction.update(interaction)
 
-                fs.readFile(path.join(__dirname, 'strings/server.txt'), 'utf8', function (err, data) {
-                    if (err) throw err;
-                    const imgEmbed = new EmbedBuilder()
-                        .setColor(interaction.client.config.color)
-                        .setImage('https://i.imgur.com/VrqxmXm.png')
+                const serverTxtData = await fs.readFile(path.join(__dirname, 'strings/server.txt'), 'utf8');
+                const serverImgEmbed = await createEmbed(null, null, 'https://i.imgur.com/VrqxmXm.png');
+                const ServerTxtEmbed = await createEmbed('About us', serverTxtData);
 
-                    const txtEmbed = new EmbedBuilder()
-                        .setColor(interaction.client.config.color)
-                        .setTitle('About us')
-                        .setDescription(data)
+                interaction.followUp({ embeds: [serverImgEmbed, ServerTxtEmbed], ephemeral: true });
+                break;
 
-                    interaction.followUp({ embeds: [imgEmbed, txtEmbed], ephemeral: true })
-                });
-            }
-            if (interaction.values == 'strike') {
+            case 'strike':
                 await interaction.update(interaction)
+                const strikeTxtData = await fs.readFile(path.join(__dirname, 'strings/strike.txt'), 'utf8');
+                const strikeTxtEmbed = await createEmbed('About us', strikeTxtData);
 
-                fs.readFile(path.join(__dirname, 'strings/strike.txt'), 'utf8', function (err, data) {
-                    if (err) throw err;
-                    const txtEmbed = new EmbedBuilder()
-                        .setColor(interaction.client.config.color)
-                        .setTitle('Strike system')
-                        .setDescription(data)
+                interaction.followUp({ embeds: [strikeTxtEmbed], ephemeral: true })
+                break;
 
-                    interaction.followUp({ embeds: [txtEmbed], ephemeral: true })
-                });
-            }
-            if (interaction.values == 'staff') {
+            case 'staff':
                 await interaction.update(interaction)
-                await interaction.followUp({ embeds: [samplemebed], ephemeral: true })
-            }
-            if (interaction.values == 'servers') {
-                await interaction.update(interaction)
-                await interaction.followUp({ embeds: [samplemebed], ephemeral: true })
-            }
-            if (interaction.values == 'partnership') {
-                await interaction.update(interaction)
-                fs.readFile(path.join(__dirname, 'strings/affiliation.txt'), 'utf8', function (err, data) {
-                    if (err) throw err;
-                    const imgEmbed = new EmbedBuilder()
-                        .setColor(interaction.client.config.color)
-                        .setImage('https://i.imgur.com/TvwOxUH.png')
+                await interaction.followUp({ embeds: [noDataEmebed], ephemeral: true })
+                break;
 
-                    const txtEmbed = new EmbedBuilder()
-                        .setColor(interaction.client.config.color)
-                        .setTitle('Affiliations')
-                        .setDescription(data)
-
-                    interaction.followUp({ embeds: [imgEmbed, txtEmbed], ephemeral: true })
-                });
-            }
-            if (interaction.values == 'xp') {
+            case 'servers':
                 await interaction.update(interaction)
-                await interaction.followUp({ embeds: [samplemebed], ephemeral: true })
-            }
+                await interaction.followUp({ embeds: [noDataEmebed], ephemeral: true })
+                break;
 
+            case 'partnership':
+                await interaction.update(interaction)
+                const partnershipTxtData = await fs.readFile(path.join(__dirname, 'strings/affiliation.txt'), 'utf8');
+                const partnershipImgEmbed = await createEmbed(null, null, 'https://i.imgur.com/TvwOxUH.png');
+                const partnershipTxtEmbed = await createEmbed('Affiliations', partnershipTxtData);
+
+                interaction.followUp({ embeds: [partnershipImgEmbed, partnershipTxtEmbed], ephemeral: true });
+                break;
+
+            case 'xp':
+                await interaction.update(interaction)
+                await interaction.followUp({ embeds: [noDataEmebed], ephemeral: true })
+                break;
         }
     }
 }

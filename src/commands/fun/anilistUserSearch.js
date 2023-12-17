@@ -46,40 +46,43 @@ module.exports = {
                 variables: variables,
             })
             .then((result) => {
+                const userData = result.data.data.User;
+                const userStats = userData.statistics;
+
                 const userInfoEmbed = new EmbedBuilder()
-                    .setTitle(result.data.data.User.name)
-                    .setURL(result.data.data.User.siteUrl)
-                    .setThumbnail(result.data.data.User.avatar.large)
+                    .setTitle(userData.name)
+                    .setURL(userData.siteUrl)
+                    .setThumbnail(userData.avatar.large)
                     .setColor(interaction.client.config.color)
                     .addFields(
                         {
                             name: 'Anime Watched',
-                            value: `${result.data.data.User.statistics.anime.count}`,
+                            value: `${userStats.anime.count}`,
                             inline: true,
                         },
                         {
                             name: 'Episodes Watched',
-                            value: `${result.data.data.User.statistics.anime.episodesWatched}`,
+                            value: `${userStats.anime.episodesWatched}`,
                             inline: true,
                         },
                         {
                             name: 'Minutes Watched',
-                            value: `${result.data.data.User.statistics.anime.minutesWatched}`,
+                            value: `${userStats.anime.minutesWatched}`,
                             inline: true,
                         },
                         {
                             name: 'Manga Read',
-                            value: `${result.data.data.User.statistics.manga.count}`,
+                            value: `${userStats.manga.count}`,
                             inline: true,
                         },
                         {
                             name: 'Volumes Read',
-                            value: `${result.data.data.User.statistics.manga.volumesRead}`,
+                            value: `${userStats.manga.volumesRead}`,
                             inline: true,
                         },
                         {
                             name: 'Chapters Read',
-                            value: `${result.data.data.User.statistics.manga.chaptersRead}`,
+                            value: `${userStats.manga.chaptersRead}`,
                             inline: true,
                         }
                     )

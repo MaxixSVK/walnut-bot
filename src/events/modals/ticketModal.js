@@ -26,6 +26,23 @@ module.exports = {
         const ticketId = uniqid();
         const channelName = `ticket-${ticketId}`
 
+        const titleImput = interaction.fields.getTextInputValue('titTicketleInput');
+        const dscImput = interaction.fields.getTextInputValue('dscTicketInput');
+
+        const ticketCreated = new EmbedBuilder()
+            .setTitle('Your ticket has been created')
+            .setDescription('Staff team will get in touch with you soon.')
+            .setColor('Green')
+
+        const ticketEmbed = new EmbedBuilder()
+            .setTitle('The ticket has been created')
+            .setColor(interaction.client.config.color)
+            .addFields(
+                { name: 'Ticket\'s name:', value: titleImput, inline: false },
+                { name: 'Ticket\'s description:', value: dscImput, inline: false },
+                { name: 'Ticket ID:', value: ticketId, inline: false },
+            )
+
         interaction.guild.channels.create({
             name: channelName,
             type: ChannelType.GuildText,
@@ -47,27 +64,7 @@ module.exports = {
                     allow: [PermissionsBitField.Flags.ViewChannel],
                 },
             ],
-        })
-
-        const titleImput = interaction.fields.getTextInputValue('titTicketleInput');
-        const dscImput = interaction.fields.getTextInputValue('dscTicketInput');
-
-        const ticketCreated = new EmbedBuilder()
-            .setTitle('Your ticket has been created')
-            .setDescription('Staff team will get in touch with you soon.')
-            .setColor('Green')
-
-        const ticketEmbed = new EmbedBuilder()
-            .setTitle('The ticket has been created')
-            .setColor(interaction.client.config.color)
-            .addFields(
-                { name: 'Ticket\'s name:', value: titleImput, inline: false },
-                { name: 'Ticket\'s description:', value: dscImput, inline: false },
-                { name: 'Ticket ID:', value: ticketId, inline: false },
-
-            )
-
-        setTimeout(() => {
+        }).then(ticketChannel => {
             const button = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
@@ -76,9 +73,8 @@ module.exports = {
                         .setEmoji('✅')
                         .setStyle(ButtonStyle.Primary),
                 )
-            const ticketChannel = interaction.guild.channels.cache.find(channel => channel.name == channelName);
             ticketChannel.send({ content: `<@${interaction.user.id}> has created ticket <@&${staffRoleId}>`, embeds: [ticketEmbed], components: [button] });
-        }, 3000);
+        });
 
         interaction.reply({ embeds: [ticketCreated], ephemeral: true });
     }

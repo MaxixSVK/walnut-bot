@@ -11,7 +11,7 @@ module.exports = {
             .setURL('https://github.com/MaxixSVK/walnut-bot')
             .addFields(
                 { name: ':speech_balloon: Version:', value: interaction.client.information.version , inline: true },
-                { name: ':busts_in_silhouette: Author:', value: 'Maxix', inline: true },
+                { name: ':busts_in_silhouette: Author:', value: 'maxix_sk', inline: true },
             )
             .setImage('https://i.imgur.com/NvxcmjO.png')
             

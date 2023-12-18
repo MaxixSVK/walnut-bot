@@ -1,10 +1,8 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const discordTranscripts = require('discord-html-transcripts');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton() || interaction.customId !== 'transcriptAndDeletetTicket') return;
         const guildId = interaction.guild.id
         const configSchema = interaction.client.configSchema
 

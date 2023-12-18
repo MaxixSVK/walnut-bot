@@ -1,10 +1,8 @@
-const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require('discord.js');
 const { CaptchaGenerator } = require('captcha-canvas');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton() || interaction.customId !== 'verifyMenuButton') return;
         const configSchema = interaction.client.configSchema
         const guild = interaction.guild;
 

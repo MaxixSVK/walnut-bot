@@ -1,9 +1,7 @@
-const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, PermissionsBitField } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, PermissionsBitField } = require('discord.js');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton() || interaction.customId !== 'closeTicket') return;
         const configSchema = interaction.client.configSchema
         const guildId = interaction.guild.id
 

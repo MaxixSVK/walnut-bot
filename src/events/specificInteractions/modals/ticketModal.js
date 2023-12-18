@@ -1,10 +1,8 @@
-const { Events, EmbedBuilder, ChannelType, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const { EmbedBuilder, ChannelType, PermissionsBitField, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const uniqid = require('uniqid');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isModalSubmit() || interaction.customId !== 'ticketModal') return;
         const configSchema = interaction.client.configSchema
         const guildId = interaction.guild.id
 

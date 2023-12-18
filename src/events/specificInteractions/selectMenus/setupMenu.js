@@ -1,12 +1,9 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const path = require('path');
 const fs = require('fs').promises;
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isStringSelectMenu() || interaction.customId !== 'setupMenu') return;
-
         async function createEmbed(title, description, image) {
             const embed = new EmbedBuilder()
                 .setColor(interaction.client.config.color)

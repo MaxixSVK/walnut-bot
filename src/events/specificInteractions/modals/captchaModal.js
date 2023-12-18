@@ -1,9 +1,7 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isModalSubmit() || interaction.customId !== 'captchaModal') return;
         const verifySchema = interaction.client.verifySchema
         const guildId = interaction.guild.id
 

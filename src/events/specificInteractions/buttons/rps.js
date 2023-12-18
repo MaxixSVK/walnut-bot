@@ -1,10 +1,7 @@
-const { Events, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton()) return;
-
         const choices = ['rock', 'paper', 'scissors'];
         if (!choices.includes(interaction.customId)) return;
 

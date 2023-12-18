@@ -1,9 +1,7 @@
-const { Events, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
+const { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton() || interaction.customId !== 'verifyEmbedButton') return;
         const configSchema = interaction.client.configSchema
         const guild = interaction.guild;
 

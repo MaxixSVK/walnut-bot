@@ -1,10 +1,7 @@
-const { Events, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
-    name: Events.InteractionCreate,
     async execute(interaction) {
-        if (!interaction.isButton() || interaction.customId !== 'ticket') return;
-
         const ticketModal = new ModalBuilder()
             .setCustomId('ticketModal')
             .setTitle('Contact staff team')

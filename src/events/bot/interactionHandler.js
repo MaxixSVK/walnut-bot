@@ -8,11 +8,11 @@ module.exports = {
         let directory;
 
         if (interaction.isModalSubmit()) {
-            directory = './specificInteractions/modals';
+            directory = './../specificInteractions/modals';
         } else if (interaction.isButton()) {
-            directory = './specificInteractions/buttons';
+            directory = './../specificInteractions/buttons';
         } else if (interaction.isStringSelectMenu()) {
-            directory = './specificInteractions/selectMenus';
+            directory = './../specificInteractions/selectMenus';
         } else {
             return;
         }
@@ -20,7 +20,7 @@ module.exports = {
         const interactionName = interaction.customId;
 
         if (['rock', 'paper', 'scissors'].includes(interactionName)) {
-            interactionFilePath = path.join(__dirname, './specificInteractions/buttons', 'rps.js');
+            interactionFilePath = path.join(__dirname, './../specificInteractions/buttons', 'rps.js');
             // TODO: find a better solution for this
         } else {
             interactionFilePath = path.join(__dirname, directory, `${interactionName}.js`);

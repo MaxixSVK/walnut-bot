@@ -5,16 +5,26 @@ module.exports = {
         .setName('bot')
         .setDescription('Informations about Walnut'),
     async execute(interaction) {
+        const client = interaction.client;
+
         const botEmbed = new EmbedBuilder()
-            .setColor(interaction.client.config.color)
+            .setColor(client.config.color)
             .setTitle('Walnut')
             .setURL('https://github.com/MaxixSVK/walnut-bot')
-            .addFields(
-                { name: ':speech_balloon: Version:', value: interaction.client.information.version , inline: true },
-                { name: ':busts_in_silhouette: Author:', value: 'maxix_sk', inline: true },
-            )
             .setImage('https://i.imgur.com/NvxcmjO.png')
-            
-        await interaction.reply({ embeds: [botEmbed], ephemeral: true  });
+            .addFields(
+                {
+                    name: ':speech_balloon: Version:',
+                    value: client.information.version,
+                    inline: true
+                },
+                {
+                    name: ':busts_in_silhouette: Author:',
+                    value: 'maxix_sk',
+                    inline: true
+                },
+            )
+ 
+        await interaction.reply({ embeds: [botEmbed], ephemeral: true });
     },
 };

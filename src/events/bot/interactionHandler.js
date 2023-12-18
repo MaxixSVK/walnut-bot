@@ -26,9 +26,11 @@ module.exports = {
             interactionFilePath = path.join(__dirname, directory, `${interactionName}.js`);
         }
         
-        console.log(interactionFilePath)
-        
-        const command = require(interactionFilePath);
-        command.execute(interaction);
+        try {
+            const command = require(interactionFilePath);
+            await command.execute(interaction);
+        } catch (error) {
+            console.error(`Error executing interaction: ${error}`);
+        }
     }
 };

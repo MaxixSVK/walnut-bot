@@ -29,6 +29,7 @@ module.exports = {
                 english
             }
             episodes
+            isAdult
         }
     }
 `;
@@ -43,7 +44,15 @@ module.exports = {
         })
             .then(response => {
                 const animeData = response.data.data.Media;
+                if (animeData.isAdult) {
+                    const errorEmbed = new EmbedBuilder()
+                        .setTitle('Error')
+                        .setDescription('I found something, but it looks like it\'s an adult anime, I can\'t show it here')
+                        .setColor('#ff0000');
 
+                    interaction.editReply({ embeds: [errorEmbed] });
+                    return;
+                }
                 const resultEmbed = new EmbedBuilder()
                     .setTitle('I found something!')
                     .setURL(animeData.siteUrl)
@@ -65,6 +74,13 @@ module.exports = {
 
                 interaction.editReply({ embeds: [resultEmbed] });
             })
-            .catch();
+            .catch((error) => {
+                const errorEmbed = new EmbedBuilder()
+                .setTitle('Error')
+                .setDescription('An error occurred while fetching data, please try again')
+                .setColor('#ff0000');
+
+                interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            });
     }
 };

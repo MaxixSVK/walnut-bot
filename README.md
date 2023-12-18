@@ -17,7 +17,7 @@ When we collect user data:
 - User enters verification process
     - Data stored in the cloud database
     - Only developers have access
-    - Data is deleted after captcha is completed
+    - Data is deleted after verification is completed
     - Data stored:
         - User ID
         - Guild ID

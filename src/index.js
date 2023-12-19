@@ -11,7 +11,8 @@ const client = new Client({
 });
 client.commands = new Collection();
 
-require('./db/dbConnect')()
+require('./db/dbConnect')();
+require('./api/apiStart')(process.env.apiAdminToken, client);
 
 fs.readdirSync('./src/handlers').forEach((file) => {
     require(`./handlers/${file}`)(client);

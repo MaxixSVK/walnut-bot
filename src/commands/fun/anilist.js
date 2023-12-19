@@ -36,9 +36,9 @@ module.exports = {
         }
 
         const errorEmbed = new EmbedBuilder()
-        .setTitle('Error')
-        .setDescription('An error occurred while fetching data, check the name and try again')
-        .setColor('#ff0000');
+            .setTitle('Error')
+            .setDescription('An error occurred while fetching data, check the name and try again')
+            .setColor('#ff0000');
 
         const sub = interaction.options.getSubcommand();
 
@@ -150,30 +150,39 @@ module.exports = {
                     .then((baseAnimeData) => {
                         const animeData = baseAnimeData.data.data.Media;
 
-                        const animeImgEmbed = new EmbedBuilder()
-                            .setImage(animeData.bannerImage)
-                            .setColor(interaction.client.config.color);
-
                         const animeEmbed = new EmbedBuilder()
-                            .setTitle(animeData.title.english)
-                            .setURL(animeData.siteUrl)
-                            .setThumbnail(animeData.coverImage.large)
-                            .setDescription(animeData.description.replace(/<[^>]*>?/gm, ''))
+                            .setTitle(animeData.title.english || animeName)
+                            .setDescription(animeData.description.replace(/<[^>]*>?/gm, '') || 'No description available')
                             .setColor(interaction.client.config.color)
                             .addFields(
                                 {
                                     name: 'Episodes',
-                                    value: `${animeData.episodes}`,
+                                    value: animeData.episodes ? `${animeData.episodes}` : 'No data available',
                                     inline: true,
                                 },
                                 {
                                     name: 'Genres',
-                                    value: `${animeData.genres.join(', ')}`,
+                                    value: animeData.genres ? `${animeData.genres.join(', ')}` : 'No data available',
                                     inline: true,
                                 }
                             )
+                            if (animeData.siteUrl) {
+                                animeEmbed.setURL(animeData.siteUrl);
+                            }
+                            if (animeData.coverImage) {
+                                animeEmbed.setThumbnail(animeData.coverImage.large);
+                            }
 
-                        interaction.reply({ embeds: [animeImgEmbed, animeEmbed] });
+                        if (animeData.bannerImage) {
+                            const animeImgEmbed = new EmbedBuilder()
+                                .setImage(animeData.bannerImage)
+                                .setColor(interaction.client.config.color);
+
+                            return interaction.reply({ embeds: [animeImgEmbed, animeEmbed] });
+                        }
+
+                        interaction.reply({ embeds: [animeEmbed] });
+
                     })
                     .catch((error) => {
                         interaction.reply({ embeds: [errorEmbed], ephemeral: true });

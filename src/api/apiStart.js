@@ -12,4 +12,8 @@ module.exports = function (adminToken, client) {
 
     app.use(helloRoute);
     app.use(serverConfigRoute);
+
+    app.use((req, res, next) => {
+        res.status(404).send({ data: 'Sorry, we cannot find that!'});
+    });
 }

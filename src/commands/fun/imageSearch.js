@@ -80,7 +80,7 @@ module.exports = {
                 .setDescription('An error occurred while fetching data, please try again')
                 .setColor('#ff0000');
 
-                interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                interaction.editReply({ embeds: [errorEmbed], ephemeral: true});
             });
     }
 };

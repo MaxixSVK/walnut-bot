@@ -42,16 +42,21 @@ module.exports = {
             query: query,
             variables: variables,
         })
-            .then(response => {
+            .then(async response => {
                 const animeData = response.data.data.Media;
-                if (animeData.isAdult) {
-                    const errorEmbed = new EmbedBuilder()
-                        .setTitle('Error')
-                        .setDescription('I found something, but it looks like it\'s an adult anime, I can\'t show it here')
-                        .setColor('#ff0000');
+                const configSchema = interaction.client.configSchema
+                const guildId = interaction.guild.id
+        
+                const configSchemaData = await configSchema.find({
+                    guildId: guildId
+                });
 
-                    interaction.editReply({ embeds: [errorEmbed] });
-                    return;
+                if (animeData.isAdult && configSchemaData[0].disableNsfw) {
+                    const nsfwEmbed = new EmbedBuilder()
+                        .setTitle('NSFW content is disabled')
+                        .setDescription('NSFW content is disabled in this server')
+                        .setColor('Red')
+                    return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
                 }
                 const resultEmbed = new EmbedBuilder()
                     .setTitle('I found something!')

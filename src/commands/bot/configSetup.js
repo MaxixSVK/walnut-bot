@@ -25,7 +25,11 @@ module.exports = {
         .addRoleOption(option => option
             .setName('unverified-role')
             .setDescription('The role for unverified users')
-            .setRequired(true)),
+            .setRequired(true))
+            .addBooleanOption(option => option
+                .setName('disable-nsfw')
+                .setDescription('Disable NSFW results')
+                .setRequired(true)),
     async execute(interaction) {
         const ids = [
             {
@@ -55,6 +59,8 @@ module.exports = {
             }
         ];
 
+        const disableNSFW = interaction.options.getBoolean('disable-nsfw');
+
         const configSchema = interaction.client.configSchema;
         const guildId = interaction.guild.id;
 
@@ -75,6 +81,7 @@ module.exports = {
 
         await configSchema.create({
             guildId: guildId,
+            disableNsfw: disableNSFW,
             ...idObject
         });
 

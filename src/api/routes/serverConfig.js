@@ -25,8 +25,7 @@ module.exports = (adminToken, client) => {
             });
         }
         res.status(200).send({
-            message: 'Config found.',
-            ...configSchemaData,
+            ...configSchemaData[0]._doc,
         });
     });
 

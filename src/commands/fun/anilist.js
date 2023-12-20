@@ -49,7 +49,9 @@ module.exports = {
                 query ($userName: String) {
                     User(name: $userName) {
                         name
+                        about
                         siteUrl
+                        bannerImage
                         avatar {
                             large
                         }
@@ -115,6 +117,16 @@ module.exports = {
                                     inline: true,
                                 }
                             )
+                        if (userData.about) {
+                            userInfoEmbed.setDescription(userData.about.replace(/<[^>]*>?/gm, ''));
+                        }
+                        if (userData.bannerImage) {
+                            const userImgEmbed = new EmbedBuilder()
+                                .setImage(userData.bannerImage)
+                                .setColor(interaction.client.config.color);
+
+                            return interaction.reply({ embeds: [userImgEmbed, userInfoEmbed] });
+                        }
 
                         interaction.reply({ embeds: [userInfoEmbed] });
                     })
@@ -138,6 +150,7 @@ module.exports = {
                     description
                     episodes
                     genres
+                    isAdult
                   }
                 }
                 `;
@@ -147,7 +160,7 @@ module.exports = {
                 };
 
                 fetchAnimeData(animeQuery, animeVariables)
-                    .then((baseAnimeData) => {
+                    .then(async (baseAnimeData) => {
                         const animeData = baseAnimeData.data.data.Media;
 
                         const animeEmbed = new EmbedBuilder()
@@ -166,12 +179,27 @@ module.exports = {
                                     inline: true,
                                 }
                             )
-                            if (animeData.siteUrl) {
-                                animeEmbed.setURL(animeData.siteUrl);
-                            }
-                            if (animeData.coverImage) {
-                                animeEmbed.setThumbnail(animeData.coverImage.large);
-                            }
+
+                        const configSchema = interaction.client.configSchema
+                        const guildId = interaction.guild.id
+
+                        const configSchemaData = await configSchema.find({
+                            guildId: guildId
+                        });
+
+                        if (animeData.isAdult && configSchemaData[0].disableNsfw) {
+                            const nsfwEmbed = new EmbedBuilder()
+                                .setTitle('NSFW content is disabled')
+                                .setDescription('NSFW content is disabled in this server')
+                                .setColor('Red')
+                            return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
+                        }
+                        if (animeData.siteUrl) {
+                            animeEmbed.setURL(animeData.siteUrl);
+                        }
+                        if (animeData.coverImage) {
+                            animeEmbed.setThumbnail(animeData.coverImage.large);
+                        }
 
                         if (animeData.bannerImage) {
                             const animeImgEmbed = new EmbedBuilder()

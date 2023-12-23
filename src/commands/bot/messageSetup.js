@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,7 +22,7 @@ module.exports = {
 
             return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
         }
-        
+
         const InfoButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -146,6 +146,23 @@ module.exports = {
 
         const channelId = configSchemaData.map(item => item.mainChannelId).toString()
         const channel = interaction.client.channels.cache.get(channelId);
+        if (!channel) {
+            const errorEmbed = new EmbedBuilder()
+                .setColor('Red')
+                .setTitle('Error')
+                .setDescription('Error while trying to send message\nPlease make sure you have setup the main channel in coning setup correctly')
+
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
+
+        const permissions = channel.permissionsFor(interaction.client.user);
+        if (!permissions.has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
+            const errorEmbed = new EmbedBuilder()   
+                .setColor('Red')
+                .setTitle('Error - while sending message')
+                .setDescription('I do not have propper permission in this channel\nPlease make sure I have permission to send messages and view this channel')
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
 
         channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [selectMenuRow, InfoButtons] });
         interaction.reply({ embeds: [setupEmbed], ephemeral: true });

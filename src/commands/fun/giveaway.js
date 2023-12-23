@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, EmbedBuilder } = require('discord.js');
 const ms = require('ms');
 
 module.exports = {
@@ -73,6 +73,15 @@ module.exports = {
                 const prize = interaction.options.getString('prize');
                 const channel = interaction.options.getChannel('channel')
 
+                const permissions = channel.permissionsFor(interaction.client.user);
+                if (!permissions.has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
+                    const errorEmbed = new EmbedBuilder()   
+                        .setColor('Red')
+                        .setTitle('Error')
+                        .setDescription('I do not have propper permission in this channel\nPlease make sure I have permission to send messages and view this channel')
+                    return interaction.editReply({ content: '', embeds: [errorEmbed], ephemeral: true });
+                }
+
                 interaction.client.giveawayManager.start(channel, {
                     prize,
                     winnerCount,
@@ -83,9 +92,11 @@ module.exports = {
                         treshold: 60000000000_000,
                         embedColor: '#0000ff'
                     }
-                });
-
-                interaction.editReply({ content: `Your giveaway has been created in ${channel}`, ephemeral: true })
+                }).then(() => {
+                    interaction.editReply({ content: `Your giveaway has been created in ${channel}`, ephemeral: true });
+                }).catch(err => {
+                    interaction.editReply({ content: 'There was an error while executing this command', ephemeral: true });
+                })
 
                 break;
             case 'edit':

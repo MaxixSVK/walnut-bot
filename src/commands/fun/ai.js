@@ -11,12 +11,13 @@ module.exports = {
             .setDescription('What you want to say to Walnut')
             .setRequired(true)),
     async execute(interaction) {
+        await interaction.deferReply();
         if (interaction.user.id !== '694569759093817374') { 
             const noPermsEmbed = new EmbedBuilder()
                 .setTitle('No Permission')
                 .setDescription('You do not have permission to use this command.')
                 .setColor('Red')
-            return interaction.reply({ embeds: [noPermsEmbed], ephemeral: true}); }
+            return interaction.editReply({ embeds: [noPermsEmbed], ephemeral: true}); }
 
         const prompt = interaction.options.getString('text');
 
@@ -26,7 +27,7 @@ module.exports = {
             model: 'gpt-3.5-turbo-instruct',
             prompt: `I am friendly discord bot Walnut and user is chating with you: ${prompt}`,
             temperature: 0,
-            max_tokens: 100,
+            max_tokens: 125,
             top_p: 1,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,   
@@ -34,7 +35,7 @@ module.exports = {
 
         const answer = response.choices[0].text;
         try {
-            interaction.reply(answer);
+            interaction.editReply(answer);
         }
         catch (error) {
             const errorEmbed = new EmbedBuilder()
@@ -42,7 +43,7 @@ module.exports = {
                 .setDescription('There was an error with your request\nSorry for the inconvenience')
                 .setColor('Red')
 
-                interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
         }
     },
 };

@@ -23,11 +23,13 @@ module.exports = {
 
         const openai = new OpenAI({ apiKey: process.env.openAiToken });
 
+        const maxTokens = interaction.user.id === '694569759093817374' ? 1000 : 125;
+
         const response = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
             prompt: `I am friendly discord bot Walnut and user is chating with you: ${prompt}`,
             temperature: 0,
-            max_tokens: 125,
+            max_tokens: maxTokens,
             top_p: 1,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,   

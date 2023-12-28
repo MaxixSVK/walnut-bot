@@ -25,7 +25,6 @@ module.exports = {
                 .setColor('Red')
 
             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-            console.error(error);
         }
     },
 };

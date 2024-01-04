@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const axios = require('axios');
+const { OpenAI } = require('openai');
+require('dotenv').config()
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +14,11 @@ module.exports = {
                 .addStringOption(option =>
                     option.setName('username')
                         .setDescription('The username of the AniList user')
-                        .setRequired(true)))
+                        .setRequired(true))
+                .addBooleanOption(option =>
+                    option.setName('ai')
+                        .setDescription('Generate a response using AI'))
+        )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('anime-search')
@@ -31,20 +37,23 @@ module.exports = {
 
                 return response;
             } catch (error) {
+                console.log(error.response.data);
                 return
             }
         }
 
         const errorEmbed = new EmbedBuilder()
             .setTitle('Error')
-            .setDescription('An error occurred while fetching data, check the name and try again')
-            .setColor('#ff0000');
+            .setDescription('There was an error with your request\nSorry for the inconvenience')
+            .setColor('Red')
 
         const sub = interaction.options.getSubcommand();
 
         switch (sub) {
             case 'user-search':
+                const ai = interaction.options.getBoolean('ai');
                 const username = interaction.options.getString('username');
+
                 const userQuery = `
                 query ($userName: String) {
                     User(name: $userName) {
@@ -76,9 +85,77 @@ module.exports = {
                 };
 
                 fetchAnimeData(userQuery, userVariables)
-                    .then((baseUserData) => {
+                    .then(async (baseUserData) => {
                         const userData = baseUserData.data.data.User;
                         const userStats = userData.statistics;
+
+                        if (ai) {
+                            if (interaction.user.id !== '694569759093817374') {
+                                const noPermsEmbed = new EmbedBuilder()
+                                    .setTitle('No Permission')
+                                    .setDescription('You do not have permission to use this command.')
+                                    .setColor('Red')
+                                return interaction.reply({ embeds: [noPermsEmbed], ephemeral: true });
+                            }
+
+                            const listQuery = `
+                            query ($username: String, $sort: [MediaListSort]) {
+                                MediaListCollection(userName: $username, type: ANIME, sort: $sort ) {
+                                  lists {
+                                    entries {
+                                      status
+                                      media {
+                                        title {
+                                          english
+                                        }
+                                        episodes
+                                      } 
+                                      progress
+                                      score
+                                    }
+                                  }
+                                }
+                              }`;
+
+                            const listVariables = {
+                                username: username,
+                                sort: 'SCORE_DESC'
+                            };
+
+                            fetchAnimeData(listQuery, listVariables)
+                                .then(async (baseUserList) => {
+                                    await interaction.deferReply();
+
+                                    const userList = baseUserList.data.data.MediaListCollection.lists[0].entries;
+
+                                    const openai = new OpenAI({ apiKey: process.env.openAiToken });
+                                    const maxTokens = interaction.user.id === '694569759093817374' ? 400 : 125;
+
+                                    const response = await openai.completions.create({
+                                        model: 'gpt-3.5-turbo-instruct',
+                                        prompt: `Someone requested sumarization of this anilist profile (respond not as request but just normal message, be creative): ${JSON.stringify({ name: userData.name, status: userData.about })} and his stats: ${JSON.stringify(userStats)}, list: ${JSON.stringify(userList)} `,
+                                        temperature: 0,
+                                        max_tokens: maxTokens,
+                                        top_p: 1,
+                                        frequency_penalty: 0.0,
+                                        presence_penalty: 0.0,
+                                    });
+
+                                    const answer = response.choices[0].text;
+                                    try {
+                                        interaction.editReply(answer);
+                                    }
+                                    catch (error) {
+                                        console.log(error);
+                                        return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
+
+                                    }
+                                }).catch((error) => {
+                                    console.log(error);
+                                    return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
+                                });
+                            return;
+                        }
 
                         const userInfoEmbed = new EmbedBuilder()
                             .setTitle(userData.name)

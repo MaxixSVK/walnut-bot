@@ -37,7 +37,6 @@ module.exports = {
 
                 return response;
             } catch (error) {
-                console.log(error.response.data);
                 return
             }
         }
@@ -146,12 +145,10 @@ module.exports = {
                                         interaction.editReply(answer);
                                     }
                                     catch (error) {
-                                        console.log(error);
                                         return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
 
                                     }
                                 }).catch((error) => {
-                                    console.log(error);
                                     return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
                                 });
                             return;

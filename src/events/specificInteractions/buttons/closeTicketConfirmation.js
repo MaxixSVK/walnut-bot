@@ -21,7 +21,6 @@ module.exports = {
         const staffRoleId = configSchemaData.map(item => item.staffRoleId).toString()
         const guild = interaction.guild;
         const member = guild.members.cache.get(interaction.user.id);
-        const walnutID = interaction.client.user.id;
 
         if (!member.roles.cache.has(staffRoleId)) {
             const permsEmbed = new EmbedBuilder()
@@ -32,35 +31,27 @@ module.exports = {
             return interaction.reply({ embeds: [permsEmbed], ephemeral: true })
         }
 
-        interaction.channel.permissionOverwrites.set([
-            {
-                id: interaction.guild.id,
-                deny: [PermissionsBitField.Flags.ViewChannel],
-            },
-            {
-                id: staffRoleId,
-                allow: [PermissionsBitField.Flags.ViewChannel],
-            },
-            {
-                id: walnutID,
-                allow: [PermissionsBitField.Flags.ViewChannel],
-            },
-        ]);
-
-        const deleteEmbed = new EmbedBuilder()
-            .setTitle('Ticket has been closed')
-            .setDescription(`Now only staff team can see this ticket\n${interaction.user} closed this ticket.`)
+        const closeEmbed = new EmbedBuilder()
+            .setTitle('Do you want to close this ticket?')
+            .setDescription('Please confirm that you want to close this ticket.')
             .setColor('Red')
 
-        const deleteButton = new ActionRowBuilder()
+        const buttons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('transcriptAndDeletetTicket')
-                    .setLabel('Make a Transcript and Delete Ticket')
+                    .setCustomId('closeTicket')
+                    .setLabel('Close Ticket')
                     .setEmoji('✅')
-                    .setStyle(ButtonStyle.Primary),
+                    .setStyle(ButtonStyle.Danger),
             )
-        await interaction.update({ content: 'Closing ticket...', embeds: [], components: [] })
-        await interaction.channel.send({ embeds: [deleteEmbed], components: [deleteButton] })
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('cancelCloseTicket')
+                    .setLabel('Cancel')
+                    .setEmoji('❌')
+                    .setStyle(ButtonStyle.Secondary),
+            )
+
+        await interaction.reply({ embeds: [closeEmbed], components: [buttons], ephemeral: true})
     }
 }

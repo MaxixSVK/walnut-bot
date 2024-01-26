@@ -66,7 +66,7 @@ module.exports = {
             const button = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setCustomId('closeTicket')
+                        .setCustomId('closeTicketConfirmation')
                         .setLabel('Close ticket')
                         .setEmoji('✅')
                         .setStyle(ButtonStyle.Primary),

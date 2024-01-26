@@ -1,19 +1,14 @@
-const app = require('express')();
-const port = 26986;
-
 module.exports = function (adminToken, client) {
-    app.listen(
-        port,
-        () => console.log(`[INFO] API listening on port ${port}`)
-    )
+    const app = require('express')();
+    const port = 26986;
 
-    const helloRoute = require('./routes/hello');
-    const serverConfigRoute = require('./routes/serverConfig')(adminToken, client);
+    app.listen(port, () => console.log(`[INFO] API listening on port ${port}`));
 
-    app.use(helloRoute);
-    app.use(serverConfigRoute);
+    app.use(require('./routes/main'));
+    app.use(require('./routes/status'));
+    app.use(require('./routes/serverConfig')(adminToken, client));
 
     app.use((req, res, next) => {
-        res.status(404).send({ data: 'Sorry, we cannot find that!'});
+        res.status(404).send({ data: 'Sorry, we cannot find that!' });
     });
 }

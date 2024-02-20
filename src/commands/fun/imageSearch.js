@@ -22,17 +22,16 @@ module.exports = {
         const traceMoeResult = traceMoeResponse.data.result[0];
 
         const query = `
-    query ($id: Int) { 
-        Media (id: $id, type: ANIME) { 
-            siteUrl
-            title {
-                english
-            }
-            episodes
-            isAdult
-        }
-    }
-`;
+            query ($id: Int) { 
+                Media (id: $id, type: ANIME) { 
+                    siteUrl
+                    title {
+                        english
+                    }
+                    episodes
+                    isAdult
+                }
+            }`;
 
         const variables = {
             id: traceMoeResult.anilist,
@@ -46,7 +45,7 @@ module.exports = {
                 const animeData = response.data.data.Media;
                 const configSchema = interaction.client.configSchema
                 const guildId = interaction.guild.id
-        
+
                 const configSchemaData = await configSchema.find({
                     guildId: guildId
                 });
@@ -81,11 +80,11 @@ module.exports = {
             })
             .catch((error) => {
                 const errorEmbed = new EmbedBuilder()
-                .setTitle('Error')
-                .setDescription('An error occurred while fetching data, please try again')
-                .setColor('#ff0000');
+                    .setTitle('Error')
+                    .setDescription('An error occurred while fetching data, please try again')
+                    .setColor('#ff0000');
 
-                interaction.editReply({ embeds: [errorEmbed], ephemeral: true});
+                interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
             });
     }
 };

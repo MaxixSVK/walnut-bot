@@ -76,8 +76,7 @@ module.exports = {
                             }
                         }
                     }
-                }
-                `;
+                }`;
 
                 const userVariables = {
                     userName: username,
@@ -98,23 +97,23 @@ module.exports = {
                             }
 
                             const listQuery = `
-                            query ($username: String, $sort: [MediaListSort]) {
-                                MediaListCollection(userName: $username, type: ANIME, sort: $sort ) {
-                                  lists {
-                                    entries {
-                                      status
-                                      media {
-                                        title {
-                                          english
+                                query ($username: String, $sort: [MediaListSort]) {
+                                    MediaListCollection(userName: $username, type: ANIME, sort: $sort ) {
+                                        lists {
+                                            entries {
+                                                status
+                                                media {
+                                                    title {
+                                                        english
+                                                    }
+                                                    episodes
+                                                } 
+                                                progress
+                                                score
+                                            }
                                         }
-                                        episodes
-                                      } 
-                                      progress
-                                      score
                                     }
-                                  }
-                                }
-                              }`;
+                                }`;
 
                             const listVariables = {
                                 username: username,
@@ -211,23 +210,22 @@ module.exports = {
             case 'anime-search':
                 const animeName = interaction.options.getString('name');
                 const animeQuery = `
-                query ($animeName: String) {
-                  Media(search: $animeName, type: ANIME) {
-                    title {
-                      english
-                    }
-                    siteUrl
-                    coverImage {
-                      large
-                    }
-                    bannerImage
-                    description
-                    episodes
-                    genres
-                    isAdult
-                  }
-                }
-                `;
+                    query ($animeName: String) {
+                        Media(search: $animeName, type: ANIME) {
+                            title {
+                                english
+                            }
+                            siteUrl
+                            coverImage {
+                                large
+                            }
+                            bannerImage
+                            description
+                            episodes
+                            genres
+                            isAdult
+                        }
+                    }`;
 
                 const animeVariables = {
                     animeName: animeName,

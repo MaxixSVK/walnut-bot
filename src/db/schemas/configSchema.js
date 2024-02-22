@@ -8,6 +8,7 @@ const verifySchema = new mongoose.Schema({
     transcriptChannelId: String,
     staffRoleId: String,
     unverifiedRoleId: String,
+    color: String,
 })
 
 module.exports = mongoose.model('config', verifySchema)

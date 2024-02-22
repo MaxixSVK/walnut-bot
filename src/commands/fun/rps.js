@@ -29,10 +29,23 @@ module.exports = {
                     .setStyle(ButtonStyle.Secondary)
             );
 
+        const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        let color = '#5865f2';
+
+        if (configSchemaData.length > 0 && configSchemaData[0].color) {
+            color = configSchemaData[0].color;
+        }
+
         const embed = new EmbedBuilder()
             .setTitle(`Let's play RPS`)
             .setDescription('Now you can play rock paper scissors with Walnut')
-            .setColor(interaction.client.config.color)
+            .setColor(color)
 
         await interaction.reply({ embeds: [embed], components: [buttons], ephemeral: true });
     },

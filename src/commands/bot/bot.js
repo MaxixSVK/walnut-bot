@@ -6,9 +6,21 @@ module.exports = {
         .setDescription('Informations about Walnut'),
     async execute(interaction) {
         const client = interaction.client;
+        const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        let color = '#5865f2';
+
+        if (configSchemaData.length > 0 && configSchemaData[0].color) {
+            color = configSchemaData[0].color;
+        }
 
         const botEmbed = new EmbedBuilder()
-            .setColor(client.config.color)
+            .setColor(color)
             .setTitle('Walnut')
             .setURL('https://github.com/MaxixSVK/walnut-bot')
             .setImage('https://i.imgur.com/NvxcmjO.png')
@@ -24,7 +36,7 @@ module.exports = {
                     inline: true
                 },
             )
- 
+
         await interaction.reply({ embeds: [botEmbed], ephemeral: true });
     },
 };

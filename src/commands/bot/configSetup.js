@@ -29,7 +29,11 @@ module.exports = {
             .addBooleanOption(option => option
                 .setName('disable-nsfw')
                 .setDescription('Disable NSFW results')
-                .setRequired(true)),
+                .setRequired(true))
+        .addStringOption(option => option
+            .setName('color')
+            .setDescription('The color of the embeds, Please provide a valid hex color (e.g. #FF0000)')
+            .setRequired(true)),
     async execute(interaction) {
         const ids = [
             {
@@ -60,6 +64,16 @@ module.exports = {
         ];
 
         const disableNSFW = interaction.options.getBoolean('disable-nsfw');
+        const color = interaction.options.getString('color');
+
+        const isHexColor = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
+        if (!isHexColor) {
+            const errorEmbed = new EmbedBuilder()
+                .setColor('Red')
+                .setTitle('Invalid hex code')
+                .setDescription('Invalid hex code. Please provide a valid hex code.');
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
 
         const configSchema = interaction.client.configSchema;
         const guildId = interaction.guild.id;
@@ -82,6 +96,7 @@ module.exports = {
         await configSchema.create({
             guildId: guildId,
             disableNsfw: disableNSFW,
+            color: color,
             ...idObject
         });
 

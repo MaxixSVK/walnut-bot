@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     async execute(interaction) {
+        
         const choices = ['rock', 'paper', 'scissors'];
         if (!choices.includes(interaction.customId)) return;
 

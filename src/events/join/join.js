@@ -28,10 +28,12 @@ module.exports = {
         const rulesAndInfoChannelId = configSchemaData.map(item => item.mainChannelId).toString()
         const members = member.guild.memberCount
 
+        color = configSchemaData[0].color;
+
         const welcomeEmbed = new EmbedBuilder()
             .setTitle('Welcome to Café LycoReco!')
             .setDescription(`Please make sure to read our <#${rulesAndInfoChannelId}> page and for everything you need to know about our server, and gain access to our chats once you are ready!`)
-            .setColor(member.client.config.color)
+            .setColor(color)
             .setImage([random(images)].toString())
             .setFooter({ text: `Customer Number: ${members}` });
 

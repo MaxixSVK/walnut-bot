@@ -3,14 +3,15 @@ const axios = require('axios');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('waifu')
-        .setDescription('Get a random waifu picture'),
+        .setName('catgirl')
+        .setDescription('Get a random catgirl picture'),
     async execute(interaction) {
         try {
-            const response = await axios.get('https://api.waifu.pics/sfw/waifu');
-            const imageUrl = response.data.url;
-
-            await interaction.reply(imageUrl);
+            const random = await axios.get('https://nekos.moe/api/v1/random/image?nsfw=false');
+            const catgirlImageid = random.data.images[0].id;
+            const catgirlImageUrl = `https://nekos.moe/image/${catgirlImageid}`;
+            
+            await interaction.reply(catgirlImageUrl);
         } catch (error) {
             const errorEmbed = new EmbedBuilder()
                 .setTitle('Error')

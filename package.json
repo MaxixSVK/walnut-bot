@@ -1,6 +1,6 @@
 {
   "name": "walnut",
-  "version": "0.58",
+  "version": "0.6",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -10,12 +10,10 @@
   "dependencies": {
     "axios": "^1.6.2",
     "captcha-canvas": "^3.2.1",
-    "cors": "^2.8.5",
     "discord-giveaways": "^6.0.1",
     "discord-html-transcripts": "^3.2.0",
     "discord.js": "^14.11.0",
     "dotenv": "^16.1.4",
-    "express": "^4.18.2",
     "mongoose": "^8.0.1",
     "openai": "^4.24.1",
     "uniqid": "^5.4.0"

@@ -5,7 +5,7 @@ module.exports = {
         .setName('message-setup')
         .setDescription('Setup message in rules and info channel')
         .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild),
     async execute(interaction) {
         const configSchema = interaction.client.configSchema;
         const guildId = interaction.guild.id;
@@ -42,25 +42,25 @@ module.exports = {
         const menuContent = [
             {
                 label: 'Server Info',
-                description: 'Select to foud out more about a server.',
+                description: 'Select to find out more about our server',
                 value: 'server',
                 emoji: '994615569833791498'
             },
             {
                 label: 'Strike System',
-                description: 'Select to foud out more about strike system.',
+                description: 'Select to find out more about our strike system',
                 value: 'strike',
                 emoji: '994650226453397634'
             },
             {
-                label: 'Café Staff',
-                description: 'Select to lear about our lovely staff.',
+                label: 'Cafe Staff ',
+                description: 'Select to learn more about our lovely staff',
                 value: 'staff',
                 emoji: '993444445741645845',
             },
             {
                 label: 'Partnership Info',
-                description: 'Select to view terms & conditions on affiliating.',
+                description: 'Select to view the terms & conditions for affiliation',
                 value: 'partnership',
                 emoji: '997572362876760135',
             },

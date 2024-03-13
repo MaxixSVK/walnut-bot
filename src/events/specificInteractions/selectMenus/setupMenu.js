@@ -73,7 +73,7 @@ module.exports = {
                     },
                     {
                         name: 'Admins',
-                        value: `<@838708612402249740>\n<@884661972254199838>\n<@944156317399011388>`,
+                        value: `<@838708612402249740>\n<@884661972254199838>\n<@944156317399011388>\n<@119142790537019392>`,
                         inline: true
                     },
                     {
@@ -83,18 +83,16 @@ module.exports = {
                     },
                     {
                         name: 'Discord Moderators',
-                        value: `<@82606082278559744>\n<@119142790537019392>\n<@258118512575381506>\n<@599973543672938511>\n<@119142790537019392>\n<@754205110825123930>\n<@354957913187680257>\n<@263352590534836224>\n<@1132129848320602156>`,
-                        inline: true
+                        value: `<@82606082278559744>\n<@258118512575381506>\n<@599973543672938511>\n<@754205110825123930>\n<@354957913187680257>\n<@263352590534836224>\n<@1132129848320602156>`,
                     },
                     {
                         name: 'Wiki Moderators',
                         value: `<@191592524392038400>\n<@944156317399011388>\n<@947278999929901096>`,
-                        inline: true
                     },
                     {
                         name: 'Reddit Moderators',
                         value: `[u/ButterShadowxx](https://www.reddit.com/user/ButterShadowxx/) - <@944156317399011388>\n[u/zenzen_0](https://www.reddit.com/user/zenzen_0/)\n[u/N3DSDUDE](https://www.reddit.com/user/N3DSdude/) - <@756627218892849395>\n[u/NeedAGoodUsername](https://www.reddit.com/user/NeedAGoodUsername/) - <@264612287048843264>\n[u/Spring-R0ll](https://www.reddit.com/user/Spring-R0ll/)`
-                    },
+                    }
                 );
 
                 interaction.followUp({ embeds: [staffTxtEmbed], ephemeral: true });

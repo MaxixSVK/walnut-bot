@@ -5,7 +5,7 @@ module.exports = {
         .setName('config-setup')
         .setDescription('Setup configuration of the bot (channels and roles)')
         .setDMPermission(false)
-        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addChannelOption(option => option
             .setName('rules-and-info-channel')
             .setDescription('The main channel with server info, verification etc')

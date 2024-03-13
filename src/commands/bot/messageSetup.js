@@ -59,12 +59,6 @@ module.exports = {
                 emoji: '993444445741645845',
             },
             {
-                label: 'Sister Server',
-                description: 'Select to view our sister server.',
-                value: 'servers',
-                emoji: '1014257843974721606',
-            },
-            {
                 label: 'Partnership Info',
                 description: 'Select to view terms & conditions on affiliating.',
                 value: 'partnership',

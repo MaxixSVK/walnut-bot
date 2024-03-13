@@ -50,7 +50,7 @@ module.exports = {
                 strikeTxtEmbed.addFields(
                     {
                         name: 'Infraction Levels',
-                        value: ':small_orange_diamond:This server follows a 4 strike system applied to major offenses.\n\n1st Strike - One hour mute\n2nd Strike - 24 hour mute\n3rd Strike - 48 hour mute\n4th Strike - Ban\n'
+                        value: 'This server follows a 4 strike system applied to major offenses.\n1. Strike - One hour mute\n2. Strike - 24 hour mute\n3. Strike - 48 hour mute\n4. Strike - Ban\n'
                     },
                     {
                         name: 'Notes',

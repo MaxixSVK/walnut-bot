@@ -57,12 +57,18 @@ module.exports = {
                         .setColor('Red')
                     return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
                 }
+
+                let color = '#5865f2';
+                if (configSchemaData.length) {
+                    color = configSchemaData[0].color;
+                }
+
                 const resultEmbed = new EmbedBuilder()
                     .setTitle('I found something!')
                     .setURL(animeData.siteUrl)
                     .setDescription(`This looks like ${animeData.title.english}`)
                     .setImage(traceMoeResult.image)
-                    .setColor(interaction.client.config.color)
+                    .setColor(color)
                     .addFields(
                         {
                             name: 'Similiarity',

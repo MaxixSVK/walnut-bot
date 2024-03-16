@@ -34,7 +34,7 @@ module.exports = {
 
         const ticketEmbed = new EmbedBuilder()
             .setTitle('The ticket has been created')
-            .setColor(interaction.client.config.color)
+            .setColor(configSchemaData[0].color)
             .addFields(
                 { name: 'Ticket\'s name:', value: titleImput, inline: false },
                 { name: 'Ticket\'s description:', value: dscImput, inline: false },

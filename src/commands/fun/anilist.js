@@ -15,9 +15,6 @@ module.exports = {
                     option.setName('username')
                         .setDescription('The username of the AniList user')
                         .setRequired(true))
-                .addBooleanOption(option =>
-                    option.setName('ai')
-                        .setDescription('Generate a response using AI'))
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -41,6 +38,18 @@ module.exports = {
             }
         }
 
+        const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        let color = '#5865f2';
+        if (configSchemaData.length) {
+            color = configSchemaData[0].color;
+        }
+
         const errorEmbed = new EmbedBuilder()
             .setTitle('Error')
             .setDescription('There was an error with your request\nSorry for the inconvenience')
@@ -50,7 +59,6 @@ module.exports = {
 
         switch (sub) {
             case 'user-search':
-                const ai = interaction.options.getBoolean('ai');
                 const username = interaction.options.getString('username');
 
                 const userQuery = `
@@ -87,77 +95,11 @@ module.exports = {
                         const userData = baseUserData.data.data.User;
                         const userStats = userData.statistics;
 
-                        if (ai) {
-                            if (interaction.user.id !== '694569759093817374') {
-                                const noPermsEmbed = new EmbedBuilder()
-                                    .setTitle('No Permission')
-                                    .setDescription('You do not have permission to use this command.')
-                                    .setColor('Red')
-                                return interaction.reply({ embeds: [noPermsEmbed], ephemeral: true });
-                            }
-
-                            const listQuery = `
-                                query ($username: String, $sort: [MediaListSort]) {
-                                    MediaListCollection(userName: $username, type: ANIME, sort: $sort ) {
-                                        lists {
-                                            entries {
-                                                status
-                                                media {
-                                                    title {
-                                                        english
-                                                    }
-                                                    episodes
-                                                } 
-                                                progress
-                                                score
-                                            }
-                                        }
-                                    }
-                                }`;
-
-                            const listVariables = {
-                                username: username,
-                                sort: 'SCORE_DESC'
-                            };
-
-                            fetchAnimeData(listQuery, listVariables)
-                                .then(async (baseUserList) => {
-                                    await interaction.deferReply();
-
-                                    const userList = baseUserList.data.data.MediaListCollection.lists[0].entries;
-
-                                    const openai = new OpenAI({ apiKey: process.env.openAiToken });
-                                    const maxTokens = interaction.user.id === '694569759093817374' ? 400 : 125;
-
-                                    const response = await openai.completions.create({
-                                        model: 'gpt-3.5-turbo-instruct',
-                                        prompt: `Someone requested sumarization of this anilist profile (respond not as request but just normal message, be creative): ${JSON.stringify({ name: userData.name, status: userData.about })} and his stats: ${JSON.stringify(userStats)}, list: ${JSON.stringify(userList)} `,
-                                        temperature: 0,
-                                        max_tokens: maxTokens,
-                                        top_p: 1,
-                                        frequency_penalty: 0.0,
-                                        presence_penalty: 0.0,
-                                    });
-
-                                    const answer = response.choices[0].text;
-                                    try {
-                                        interaction.editReply(answer);
-                                    }
-                                    catch (error) {
-                                        return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
-
-                                    }
-                                }).catch((error) => {
-                                    return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
-                                });
-                            return;
-                        }
-
                         const userInfoEmbed = new EmbedBuilder()
                             .setTitle(userData.name)
                             .setURL(userData.siteUrl)
                             .setThumbnail(userData.avatar.large)
-                            .setColor(interaction.client.config.color)
+                            .setColor(color)
                             .addFields(
                                 {
                                     name: 'Anime Watched',
@@ -190,13 +132,15 @@ module.exports = {
                                     inline: true,
                                 }
                             )
+
                         if (userData.about) {
                             userInfoEmbed.setDescription(userData.about.replace(/<[^>]*>?/gm, ''));
                         }
+
                         if (userData.bannerImage) {
                             const userImgEmbed = new EmbedBuilder()
                                 .setImage(userData.bannerImage)
-                                .setColor(interaction.client.config.color);
+                                .setColor(color);
 
                             return interaction.reply({ embeds: [userImgEmbed, userInfoEmbed] });
                         }
@@ -238,7 +182,7 @@ module.exports = {
                         const animeEmbed = new EmbedBuilder()
                             .setTitle(animeData.title.english || animeName)
                             .setDescription(animeData.description.replace(/<[^>]*>?/gm, '') || 'No description available')
-                            .setColor(interaction.client.config.color)
+                            .setColor(color)
                             .addFields(
                                 {
                                     name: 'Episodes',
@@ -251,13 +195,6 @@ module.exports = {
                                     inline: true,
                                 }
                             )
-
-                        const configSchema = interaction.client.configSchema
-                        const guildId = interaction.guild.id
-
-                        const configSchemaData = await configSchema.find({
-                            guildId: guildId
-                        });
 
                         if (animeData.isAdult && configSchemaData[0].disableNsfw) {
                             const nsfwEmbed = new EmbedBuilder()
@@ -276,7 +213,7 @@ module.exports = {
                         if (animeData.bannerImage) {
                             const animeImgEmbed = new EmbedBuilder()
                                 .setImage(animeData.bannerImage)
-                                .setColor(interaction.client.config.color);
+                                .setColor(color);
 
                             return interaction.reply({ embeds: [animeImgEmbed, animeEmbed] });
                         }

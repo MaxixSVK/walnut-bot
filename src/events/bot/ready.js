@@ -8,7 +8,7 @@ module.exports = {
         
         client.user.setPresence({
             activities: [{
-                name: client.config.customStatus,
+                name: "Hacking DA",
                 type: ActivityType.Custom
             }],
             status: 'online'

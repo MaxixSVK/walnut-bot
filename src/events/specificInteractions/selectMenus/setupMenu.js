@@ -1,14 +1,24 @@
 const { EmbedBuilder } = require('discord.js');
-const path = require('path');
-const fs = require('fs').promises;
 
 // WARNING: HARD CODED STRINGS THAT ARE RELEVANT ONLY FOR LR SERVER 
 
 module.exports = {
     async execute(interaction) {
+        const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        let color = '#5865f2';
+        if (configSchemaData.length) {
+            color = configSchemaData[0].color;
+        }
+
         async function createEmbed(title, description, image) {
             const embed = new EmbedBuilder()
-                .setColor(interaction.client.config.color)
+                .setColor(color)
                 .setTitle(title)
                 .setDescription(description);
 

@@ -60,6 +60,17 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
         .setDMPermission(false),
     async execute(interaction) {
+        const configSchema = interaction.client.configSchema
+        const guildId = interaction.guild.id
+
+        const configSchemaData = await configSchema.find({
+            guildId: guildId
+        });
+
+        let color = '#5865f2';
+        if (configSchemaData.length) {
+            color = configSchemaData[0].color;
+        }
 
         const sub = interaction.options.getSubcommand();
 
@@ -87,10 +98,12 @@ module.exports = {
                     winnerCount,
                     duration,
                     hostedBy: interaction.user,
+                    embedColor: color,
+                    embedColorEnd: color,
                     lastChance: {
                         enabled: true,
                         treshold: 60000000000_000,
-                        embedColor: '#0000ff'
+                        embedColor: color
                     }
                 }).then(() => {
                     interaction.editReply({ content: `Your giveaway has been created in ${channel}`, ephemeral: true });

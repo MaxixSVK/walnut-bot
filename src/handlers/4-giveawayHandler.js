@@ -23,8 +23,6 @@ module.exports = (client) => {
     client.giveawayManager = new GiveawaysManager(client, {
         default: {
             botsCanWin: false,
-            embedColor: client.config.color,
-            embedColorEnd: client.config.color,
             reaction: '🎉',
         },
     });

@@ -12,12 +12,13 @@ module.exports = {
             .setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
-        if (interaction.user.id !== '694569759093817374') { 
+        if (interaction.user.id !== '694569759093817374') {
             const noPermsEmbed = new EmbedBuilder()
                 .setTitle('No Permission')
                 .setDescription('You do not have permission to use this command.')
                 .setColor('Red')
-            return interaction.editReply({ embeds: [noPermsEmbed], ephemeral: true}); }
+            return interaction.editReply({ embeds: [noPermsEmbed], ephemeral: true });
+        }
 
         const prompt = interaction.options.getString('text');
 
@@ -32,20 +33,25 @@ module.exports = {
             max_tokens: maxTokens,
             top_p: 1,
             frequency_penalty: 0.0,
-            presence_penalty: 0.0,   
+            presence_penalty: 0.0,
         });
 
         const answer = response.choices[0].text;
+
+        const errorEmbed = new EmbedBuilder()
+            .setTitle('Error')
+            .setDescription('There was an error with your request\nSorry for the inconvenience')
+            .setColor('Red')
+
+        if (answer.length === 0) {
+            return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
+        }
+
         try {
             interaction.editReply(answer);
         }
         catch (error) {
-            const errorEmbed = new EmbedBuilder()
-                .setTitle('Error')
-                .setDescription('There was an error with your request\nSorry for the inconvenience')
-                .setColor('Red')
-
-                interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
+            interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
         }
     },
 };

@@ -137,11 +137,11 @@ module.exports = {
                 const xpImgEmbed = await createEmbed(null, null, 'https://i.imgur.com/lPBVqIt.png');
                 const xpTxtEmbed1 = await createEmbed(
                     'XP Level System: Tatsu',
-                    'The server\'s leveling system has many perks for the server!\nTalk and have conversations with other members in any channel and send messages to earn XP to level up!\nYou will be given roles for your reward, and such roles grant perks, reaching a certain level unlocks color roles.\n\nYou can go to <#1041597286024749107> and type `t!rank` to check your level and `t!top` to check the leaderboard!\n',
+                    'Our server’s leveling system comes with a few perks! Talk and have conversations with other members in any channel and send messages to earn XP and level up! Each level comes with a new role and a corresponding character icon.\n\nYou can go to <#1041597286024749107> and type t!rank to check your personal level scorecard or t!top to see the leaderboard. ',
                     null);
                 const xpTxtEmbed2 = await createEmbed(
-                    null,
-                    '**Level 5 - Café Regulars**\n- Permission to send Images.\n**Level 10 - Regular Customer**\n- Permissions to send emojis and stickers from other servers.\n**Level 15 - Café Worker**\n-\n**Level 20 - Café Manager**\n-\n**Level 25 - Novice Hacker**\n- Permissions to Change Nickname.\n**Level 30 - Expert Hacker**\n-\n**Level 35 - Rookie Lycoris**\n-\n**Level 40 - 2nd Lycoris**\n-\n**Level 45 - 1st Lycoris**\n-\n**Level 50 - Pro Lycoris**\n- Create Public Threads.\n**Level 60 - Elite Lycoris**\n-\n**Level 70 - Lycoris Commander**\n-\n**Level 80 - Head of DA**\n-\n**Level 90 - Legendary Lycoris**\n-\n^ XP Leveling up system perks can be changed anytime. Last Update: `March 22th, 2024`\n',
+                    "**Our leveled roles advance as follows:**",
+                    '- Regular Customer – 500XP – Grants image posting permissions in <#1041573615822450800>\n- Café Worker – 5,000XP\n- Café Manager – 10,000XP\n- Novice Hacker – 25,000XP\n- Expert Hacker – 50,000XP\n- Rookie Lycoris – 75,000XP\n- 2nd Lycoris – 100,000XP\n- 1st Lycoris – 150,000XP\n- Pro Lycoris – 200,000XP\n- Elite Lycoris – 250,000XP\n- Lycoris Commander – 300,000XP\n- Head of DA – 400,000\n- Legendary Lycoris – 500,000XP',
                     null);
 
                 interaction.followUp({ embeds: [xpImgEmbed, xpTxtEmbed1, xpTxtEmbed2], ephemeral: true });

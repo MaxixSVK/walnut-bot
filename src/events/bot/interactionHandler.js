@@ -7,14 +7,18 @@ module.exports = {
         let interactionFilePath;
         let directory;
 
-        if (interaction.isModalSubmit()) {
-            directory = './../specificInteractions/modals';
-        } else if (interaction.isButton()) {
-            directory = './../specificInteractions/buttons';
-        } else if (interaction.isStringSelectMenu()) {
-            directory = './../specificInteractions/selectMenus';
-        } else {
-            return;
+        switch (true) {
+            case interaction.isModalSubmit():
+                directory = './../specificInteractions/modals';
+                break;
+            case interaction.isButton():
+                directory = './../specificInteractions/buttons';
+                break;
+            case interaction.isStringSelectMenu():
+                directory = './../specificInteractions/selectMenus';
+                break;
+            default:
+                return;
         }
 
         const interactionName = interaction.customId;

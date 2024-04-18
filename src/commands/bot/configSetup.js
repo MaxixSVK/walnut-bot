@@ -18,6 +18,10 @@ module.exports = {
             .setName('transcript-channel')
             .setDescription('The transcript channel for tickets')
             .setRequired(true))
+        .addChannelOption(option => option
+            .setName('ticket-log-channel')
+            .setDescription('The log channel for tickets')
+            .setRequired(true))
         .addRoleOption(option => option
             .setName('staff-role')
             .setDescription('The role for staff members')
@@ -50,6 +54,11 @@ module.exports = {
                 name: 'transcriptChannelId',
                 type: 'getChannel',
                 commandOption: 'transcript-channel'
+            },
+            {
+                name: 'ticketLogChannelId',
+                type: 'getChannel',
+                commandOption: 'ticket-log-channel'
             },
             {
                 name: 'staffRoleId',

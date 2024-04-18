@@ -29,10 +29,9 @@ When we collect user data:
         - All data entered by user when creating giveaway
         - User ID of all giveaway winners
         - Guild ID
-- When user creates a ticket 
+- After user creates a ticket 
     - Data stored in private channel 
     - All server moderators have access
-    - Data is saved after ticket is deleted
     - Saved data:
         - User profile
             - Username

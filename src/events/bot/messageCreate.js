@@ -8,11 +8,9 @@ module.exports = {
 
         switch (true) {
             case /ticket-\w+/.test(message.channel.name):
-                /*directory = './../specificMessages/';
+                directory = './../specificMessages/';
                 file = 'ticket.js';
-                break;*/
-                return;
-                // TODO Remove this return statement and uncomment the above code
+                break;
             default:
                 return;
         }

@@ -6,6 +6,7 @@ const verifySchema = new mongoose.Schema({
     mainChannelId: String,
     welcomeChannelId: String,
     transcriptChannelId: String,
+    ticketLogChannelId: String,
     staffRoleId: String,
     unverifiedRoleId: String,
     color: String,

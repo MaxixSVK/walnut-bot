@@ -39,15 +39,18 @@ module.exports = {
         }
 
         const configSchema = interaction.client.configSchema
-        const guildId = interaction.guild.id
-
-        const configSchemaData = await configSchema.find({
-            guildId: guildId
-        });
-
         let color = '#5865f2';
-        if (configSchemaData.length) {
-            color = configSchemaData[0].color;
+
+        if (interaction.guild) {
+            const guildId = interaction.guild.id
+
+            const configSchemaData = await configSchema.find({
+                guildId: guildId
+            });
+
+            if (configSchemaData.length > 0 && configSchemaData[0].color) {
+                color = configSchemaData[0].color;
+            }
         }
 
         const errorEmbed = new EmbedBuilder()

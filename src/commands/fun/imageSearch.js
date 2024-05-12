@@ -43,24 +43,24 @@ module.exports = {
         })
             .then(async response => {
                 const animeData = response.data.data.Media;
-                const configSchema = interaction.client.configSchema
-                const guildId = interaction.guild.id
-
-                const configSchemaData = await configSchema.find({
-                    guildId: guildId
-                });
-
-                if (animeData.isAdult && configSchemaData[0].disableNsfw) {
-                    const nsfwEmbed = new EmbedBuilder()
-                        .setTitle('NSFW content is disabled')
-                        .setDescription('NSFW content is disabled in this server')
-                        .setColor('Red')
-                    return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
-                }
-
+                const configSchema = interaction.client.configSchema;
                 let color = '#5865f2';
-                if (configSchemaData.length) {
-                    color = configSchemaData[0].color;
+                
+                if (interaction.guild) {
+                    const guildId = interaction.guild.id;
+                    const configSchemaData = await configSchema.find({ guildId: guildId });
+                
+                    if (configSchemaData.length > 0) {
+                        if (animeData.isAdult && configSchemaData[0].disableNsfw) {
+                            const nsfwEmbed = new EmbedBuilder()
+                                .setTitle('NSFW content is disabled')
+                                .setDescription('NSFW content is disabled in this server')
+                                .setColor('Red');
+                            return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
+                        }
+                
+                        color = configSchemaData[0].color || color;
+                    }
                 }
 
                 const resultEmbed = new EmbedBuilder()

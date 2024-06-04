@@ -56,7 +56,7 @@ module.exports = {
                                 .setTitle('NSFW content is disabled')
                                 .setDescription('NSFW content is disabled in this server')
                                 .setColor('Red');
-                            return interaction.reply({ embeds: [nsfwEmbed], ephemeral: true });
+                            return interaction.editReply({ embeds: [nsfwEmbed], ephemeral: true });
                         }
                 
                         color = configSchemaData[0].color || color;

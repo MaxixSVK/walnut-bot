@@ -14,6 +14,7 @@ const client = new Client({
 client.commands = new Collection();
 
 require('./db/dbConnect')();
+require('./api/startApi')();
 
 fs.readdirSync('./src/handlers').forEach((file) => {
     require(`./handlers/${file}`)(client);

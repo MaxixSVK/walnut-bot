@@ -1,11 +1,12 @@
-const { SlashCommandBuilder} = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+
+let lastImageIndex = 0;
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('gif')
-        .setDescription('Generates a random LycoReco GIF'),
+        .setDescription('Generates a LycoReco GIF in sequence'),
     async execute(interaction) {
-        const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
         const images = [
             'https://media.tenor.com/NzGpGWRN7MwAAAAC/nishikigi-chisato.gif',
             'https://media.tenor.com/W3wUoMhulrwAAAAC/lycoris-recoil-lycoris.gif',
@@ -18,6 +19,8 @@ module.exports = {
             'https://media.tenor.com/SCo7LfX56YEAAAAC/lycoris-recoil.gif',
         ];
 
-        await interaction.reply([random(images)].toString());
+        await interaction.reply(images[lastImageIndex].toString());
+        
+        lastImageIndex = (lastImageIndex + 1) % images.length;
     },
 };

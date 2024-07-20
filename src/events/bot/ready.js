@@ -4,8 +4,6 @@ module.exports = {
     name: Events.ClientReady,
     once: true,
     execute(client) {
-        console.log(`[INFO] Logged in as ${client.user.tag}`);
-        
         client.user.setPresence({
             activities: [{
                 name: "Hacking DA",
@@ -13,6 +11,7 @@ module.exports = {
             }],
             status: 'online'
         });
-        console.log('successfully finished startup');
+
+        console.log(`[INFO] Logged in as ${client.user.tag}`);
     }
 };

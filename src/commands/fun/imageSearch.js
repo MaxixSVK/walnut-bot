@@ -37,60 +37,51 @@ module.exports = {
             id: traceMoeResult.anilist,
         };
 
-        axios.post('https://graphql.anilist.co', {
+        const response = await axios.post('https://graphql.anilist.co', {
             query: query,
             variables: variables,
-        })
-            .then(async response => {
-                const animeData = response.data.data.Media;
-                const configSchema = interaction.client.configSchema;
-                let color = '#5865f2';
-                
-                if (interaction.guild) {
-                    const guildId = interaction.guild.id;
-                    const configSchemaData = await configSchema.find({ guildId: guildId });
-                
-                    if (configSchemaData.length > 0) {
-                        if (animeData.isAdult && configSchemaData[0].disableNsfw) {
-                            const nsfwEmbed = new EmbedBuilder()
-                                .setTitle('NSFW content is disabled')
-                                .setDescription('NSFW content is disabled in this server')
-                                .setColor('Red');
-                            return interaction.editReply({ embeds: [nsfwEmbed], ephemeral: true });
-                        }
-                
-                        color = configSchemaData[0].color || color;
-                    }
+        });
+
+        const animeData = response.data.data.Media;
+        const configSchema = interaction.client.configSchema;
+        let color = '#5865f2';
+
+        if (interaction.guild) {
+            const guildId = interaction.guild.id;
+            const configSchemaData = await configSchema.find({ guildId: guildId });
+
+            if (configSchemaData.length > 0) {
+                if (animeData.isAdult && configSchemaData[0].disableNsfw) {
+                    const nsfwEmbed = new EmbedBuilder()
+                        .setTitle('NSFW content is disabled')
+                        .setDescription('NSFW content is disabled in this server')
+                        .setColor('Red');
+                    return interaction.editReply({ embeds: [nsfwEmbed], ephemeral: true });
                 }
 
-                const resultEmbed = new EmbedBuilder()
-                    .setTitle('I found something!')
-                    .setURL(animeData.siteUrl)
-                    .setDescription(`This looks like ${animeData.title.english}`)
-                    .setImage(traceMoeResult.image)
-                    .setColor(color)
-                    .addFields(
-                        {
-                            name: 'Similiarity',
-                            value: `${(traceMoeResult.similarity * 100).toFixed(2)}%`,
-                            inline: true
-                        },
-                        {
-                            name: 'Episode',
-                            value: `${traceMoeResult.episode}/${animeData.episodes}`,
-                            inline: true
-                        },
-                    )
+                color = configSchemaData[0].color || color;
+            }
+        }
 
-                interaction.editReply({ embeds: [resultEmbed] });
-            })
-            .catch((error) => {
-                const errorEmbed = new EmbedBuilder()
-                    .setTitle('Error')
-                    .setDescription('An error occurred while fetching data, please try again')
-                    .setColor('#ff0000');
+        const resultEmbed = new EmbedBuilder()
+            .setTitle('I found something!')
+            .setURL(animeData.siteUrl)
+            .setDescription(`This looks like ${animeData.title.english || 'Unknown'}`)
+            .setImage(traceMoeResult.image)
+            .setColor(color)
+            .addFields(
+                {
+                    name: 'Similiarity',
+                    value: `${(traceMoeResult.similarity * 100).toFixed(2)}%`,
+                    inline: true
+                },
+                {
+                    name: 'Episode',
+                    value: `${traceMoeResult.episode}/${animeData.episodes}`,
+                    inline: true
+                },
+            )
 
-                interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
-            });
+        interaction.editReply({ embeds: [resultEmbed] });
     }
 };

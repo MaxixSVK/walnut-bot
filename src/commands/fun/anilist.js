@@ -139,13 +139,16 @@ module.exports = {
                 return interaction.reply({ embeds: [noDataEmbed], ephemeral: true });
             }
 
+            const title = animeData.Media.title.english || animeName || 'Title not available';
+            const genres = animeData.Media.genres.length > 0 ? animeData.Media.genres.join(', ') : 'No genres available';
+
             const animeEmbed = new EmbedBuilder()
-                .setTitle(animeData.Media.title.english || animeName)
+                .setTitle(title)
                 .setDescription(animeData.Media.description.replace(/<[^>]*>?/gm, '') || 'No description available')
                 .setColor(color)
                 .addFields(
-                    { name: 'Episodes', value: animeData.Media.episodes ? `${animeData.Media.episodes}` : 'No data available', inline: true },
-                    { name: 'Genres', value: animeData.Media.genres ? animeData.Media.genres.join(', ') : 'No data available', inline: true }
+                    { name: 'Episodes', value: `${animeData.Media.episodes || 'No data available'}`, inline: true },
+                    { name: 'Genres', value: genres, inline: true }
                 );
 
             if (animeData.Media.siteUrl) {

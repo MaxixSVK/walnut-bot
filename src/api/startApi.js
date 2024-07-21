@@ -14,6 +14,15 @@ module.exports = function() {
         res.status(200).send({ status: 'ok' });
     });
 
+    app.use((req, res) => {
+        res.status(404).send({ message: 'Not found' });
+    });
+
+    app.use((err, req, res, next) => {
+        console.error(`[ERROR] [API] [${new Date().toLocaleString()}]\n${err.stack}`);
+        res.status(500).send({ message: 'Internal server error' });
+    });
+
     app.listen(port, () => {
         console.log(`[INFO] API is running on port ${port}`);
     });

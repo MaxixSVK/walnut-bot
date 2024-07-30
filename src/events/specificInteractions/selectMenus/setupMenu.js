@@ -46,7 +46,7 @@ module.exports = {
                     },
                     {
                         name: 'Lycoris Recoil Community',
-                        value: 'Discord Invite Links\n:small_blue_diamond:[Official](https:/discord.gg/LycorisRecoil)\n:small_blue_diamond:[Pernament](https:/discord.gg/x6dDkKmdXM)\nOfficial Website for Lycoris Recoil\n:small_blue_diamond:[Japanese](https://lycoris-recoil.com/)\n:small_blue_diamond:[English](https://lycorisrecoil.com/)\nOther Links\n:small_blue_diamond:[Subreddit](https://www.reddit.com/r/LycorisRecoil/)\n:small_blue_diamond:[Official Twitter Page](https://twitter.com/lycoris_recoil)\n:small_blue_diamond:[Wiki](https://lycoris-recoil.fandom.com/wiki/Lycoris_Recoil_Wiki)'
+                        value: 'Discord Invite Links\n:small_blue_diamond:[Official](https:/discord.gg/LycorisRecoil)\n:small_blue_diamond:[Permanent](https:/discord.gg/x6dDkKmdXM)\nOfficial Website for Lycoris Recoil\n:small_blue_diamond:[Japanese](https://lycoris-recoil.com/)\n:small_blue_diamond:[English](https://lycorisrecoil.com/)\nOther Links\n:small_blue_diamond:[Subreddit](https://www.reddit.com/r/LycorisRecoil/)\n:small_blue_diamond:[Official Twitter Page](https://twitter.com/lycoris_recoil)\n:small_blue_diamond:[Wiki](https://lycoris-recoil.fandom.com/wiki/Lycoris_Recoil_Wiki)'
                     }
                 );
 

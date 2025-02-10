@@ -22,14 +22,8 @@ module.exports = {
         }
 
         const interactionName = interaction.customId;
+        interactionFilePath = path.join(__dirname, directory, `${interactionName}.js`);
 
-        if (['rock', 'paper', 'scissors'].includes(interactionName)) {
-            interactionFilePath = path.join(__dirname, './../specificInteractions/buttons', 'rps.js');
-            // TODO: find a better solution for this
-        } else {
-            interactionFilePath = path.join(__dirname, directory, `${interactionName}.js`);
-        }
-        
         try {
             const command = require(interactionFilePath);
             await command.execute(interaction);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const verifySchema = new mongoose.Schema({
+const configSchema = new mongoose.Schema({
     guildId: String,
     disableNsfw: Boolean,
     mainChannelId: String,
@@ -12,4 +12,4 @@ const verifySchema = new mongoose.Schema({
     color: String,
 })
 
-module.exports = mongoose.model('config', verifySchema)
+module.exports = mongoose.model('config', configSchema)

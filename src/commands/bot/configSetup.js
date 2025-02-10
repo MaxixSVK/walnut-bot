@@ -26,14 +26,10 @@ module.exports = {
             .setName('staff-role')
             .setDescription('The role for staff members')
             .setRequired(true))
-        .addRoleOption(option => option
-            .setName('unverified-role')
-            .setDescription('The role for unverified users')
+        .addBooleanOption(option => option
+            .setName('disable-nsfw')
+            .setDescription('Disable NSFW results')
             .setRequired(true))
-            .addBooleanOption(option => option
-                .setName('disable-nsfw')
-                .setDescription('Disable NSFW results')
-                .setRequired(true))
         .addStringOption(option => option
             .setName('color')
             .setDescription('The color of the embeds, Please provide a valid hex color (e.g. #FF0000)')
@@ -64,11 +60,6 @@ module.exports = {
                 name: 'staffRoleId',
                 type: 'getRole',
                 commandOption: 'staff-role'
-            },
-            {
-                name: 'unverifiedRoleId',
-                type: 'getRole',
-                commandOption: 'unverified-role'
             }
         ];
 

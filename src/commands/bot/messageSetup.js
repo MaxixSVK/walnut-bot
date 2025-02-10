@@ -26,13 +26,6 @@ module.exports = {
         const InfoButtons = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('verifyMenuButton')
-                    .setLabel('Verify')
-                    .setEmoji('✅')
-                    .setStyle(ButtonStyle.Secondary),
-            )
-            .addComponents(
-                new ButtonBuilder()
                     .setCustomId('ticket')
                     .setLabel('Contact Staff')
                     .setEmoji('997584350407295178')
@@ -115,10 +108,6 @@ module.exports = {
 \n> “Not breaking any of the rules” does not excuse you from purposefully degrading the server’s quality.
 \n> If you believe that a staff member is being abusive towards others or possibly you then please DM create a Ticket by clicking "contact staff" right away to resolve the issue at hand.`
 
-        const text2 = `
-**In order to gain access to our server and start chatting, please use the selection menu below.**
-\nPlease note that when you choose to verify, you also accept our rules and conditions. Excuses such as \`I did not know there were rules.\` or \`I did not read the rules.\` will not be accepted as valid excuses.`
-
         const firstembed = new EmbedBuilder()
             .setColor('#E51468')
             .setImage('https://i.imgur.com/Pxy76NO.png')
@@ -127,11 +116,6 @@ module.exports = {
             .setTitle(`Lycoris Recoil Discord Rules\nPlease read this section carefully.`)
             .setColor('#E51468')
             .setDescription(`${text1}`)
-
-        const thirdembed = new EmbedBuilder()
-            .setColor('#E51468')
-            .setTitle('Verification and Server Access')
-            .setDescription(`${text2}`)
 
         const setupEmbed = new EmbedBuilder()
             .setColor('Green')
@@ -158,7 +142,7 @@ module.exports = {
             return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
         }
 
-        channel.send({ embeds: [firstembed, secondembed, thirdembed], components: [selectMenuRow, InfoButtons] });
+        channel.send({ embeds: [firstembed, secondembed], components: [selectMenuRow, InfoButtons] });
         interaction.reply({ embeds: [setupEmbed], ephemeral: true });
     }
 };

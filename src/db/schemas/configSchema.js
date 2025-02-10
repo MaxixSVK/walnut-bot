@@ -8,7 +8,6 @@ const configSchema = new mongoose.Schema({
     transcriptChannelId: String,
     ticketLogChannelId: String,
     staffRoleId: String,
-    unverifiedRoleId: String,
     color: String,
 })
 

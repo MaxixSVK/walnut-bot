@@ -14,9 +14,6 @@ module.exports = {
 
         if (!configSchemaData.length) return;
 
-        const verifyRole = configSchemaData.map(item => item.unverifiedRoleId).toString()
-        await member.roles.add(verifyRole);
-
         const images = [
             'https://i.imgur.com/Oatpx2O.png',
             'https://i.imgur.com/cWvOC3j.png',

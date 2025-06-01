@@ -46,7 +46,7 @@ module.exports = {
                     },
                     {
                         name: 'Lycoris Recoil Community',
-                        value: 'Discord Invite Links\n:small_blue_diamond:[Official](https:/discord.gg/LycorisRecoil)\n:small_blue_diamond:[Permanent](https:/discord.gg/x6dDkKmdXM)\nOfficial Website for Lycoris Recoil\n:small_blue_diamond:[Japanese](https://lycoris-recoil.com/)\n:small_blue_diamond:[English](https://lycorisrecoil.com/)\nOther Links\n:small_blue_diamond:[Subreddit](https://www.reddit.com/r/LycorisRecoil/)\n:small_blue_diamond:[Official Twitter Page](https://twitter.com/lycoris_recoil)\n:small_blue_diamond:[Wiki](https://lycoris-recoil.fandom.com/wiki/Lycoris_Recoil_Wiki)'
+                        value: 'Discord Invite Links\n:small_blue_diamond:[Official](https:/discord.gg/LycorisRecoil)\n:small_blue_diamond:[Permanent](https:/discord.gg/x6dDkKmdXM)\nOfficial Website for Lycoris Recoil\n:small_blue_diamond:[Japanese](https://lycoris-recoil.com/)\n:small_blue_diamond:[English](https://lycorisrecoil.com/)\nOther Links\n:small_blue_diamond:[Subreddit](https://www.reddit.com/r/LycorisRecoil/)\n:small_blue_diamond:[Official X Page](https://x.com/lycoris_recoil)\n:small_blue_diamond:[Wiki](https://lycoris-recoil.fandom.com/wiki/Lycoris_Recoil_Wiki)'
                     }
                 );
 
@@ -83,7 +83,7 @@ module.exports = {
                     },
                     {
                         name: 'Admins',
-                        value: `<@838708612402249740>\n<@884661972254199838>\n<@944156317399011388>\n<@119142790537019392>`,
+                        value: `<@838708612402249740>\n<@884661972254199838>\n<@944156317399011388>\n<@119142790537019392>\n<@258118512575381506>`,
                         inline: true
                     },
                     {
@@ -93,15 +93,15 @@ module.exports = {
                     },
                     {
                         name: 'Discord Moderators',
-                        value: `<@82606082278559744>\n<@258118512575381506>\n<@599973543672938511>\n<@754205110825123930>\n<@354957913187680257>\n<@263352590534836224>\n<@1132129848320602156>`,
+                        value: `<@599973543672938511>\n<@754205110825123930>\n<@354957913187680257>`,
                     },
                     {
                         name: 'Wiki Moderators',
-                        value: `<@191592524392038400>\n<@944156317399011388>\n<@947278999929901096>`,
+                        value: `\n<@944156317399011388>`,
                     },
                     {
                         name: 'Reddit Moderators',
-                        value: `[u/ButterShadowxx](https://www.reddit.com/user/ButterShadowxx/) - <@944156317399011388>\n[u/zenzen_0](https://www.reddit.com/user/zenzen_0/)\n[u/N3DSDUDE](https://www.reddit.com/user/N3DSdude/) - <@756627218892849395>\n[u/NeedAGoodUsername](https://www.reddit.com/user/NeedAGoodUsername/) - <@264612287048843264>\n[u/Spring-R0ll](https://www.reddit.com/user/Spring-R0ll/)`
+                        value: `[u/ButterShadowxx](https://www.reddit.com/user/ButterShadowxx/) - <@944156317399011388>\n[u/zenzen_0](https://www.reddit.com/user/zenzen_0/)\n[u/N3DSDUDE](https://www.reddit.com/user/N3DSdude/)\n[u/NeedAGoodUsername](https://www.reddit.com/user/NeedAGoodUsername/)\n[u/Spring-R0ll](https://www.reddit.com/user/Spring-R0ll/)`
                     }
                 );
 

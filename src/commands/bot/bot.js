@@ -26,18 +26,23 @@ module.exports = {
             .setColor(color)
             .setTitle('Walnut')
             .setURL('https://github.com/MaxixSVK/walnut-bot')
-            .setImage('https://i.imgur.com/NvxcmjO.png')
+            .setImage('https://i.imgur.com/mRVTlKf.jpeg')
             .addFields(
-                {
-                    name: ':speech_balloon: Version:',
-                    value: client.information.version,
-                    inline: true
-                },
-                {
-                    name: ':busts_in_silhouette: Author:',
-                    value: 'maxix_sk',
-                    inline: true
-                },
+            {
+                name: ':speech_balloon: Version:',
+                value: client.information.version,
+                inline: true
+            },
+            {
+                name: ':busts_in_silhouette: Author',
+                value: 'by: maxix_sk',
+                inline: true
+            },
+            {
+                name: ':art: Art (pfp)',
+                value: 'by: serissaarts',
+                inline: true
+            },
             )
 
         await interaction.reply({ embeds: [botEmbed], ephemeral: true });

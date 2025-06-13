@@ -35,12 +35,12 @@ module.exports = {
             },
             {
                 name: ':busts_in_silhouette: Author',
-                value: 'by: maxix_sk',
+                value: 'maxix_sk',
                 inline: true
             },
             {
                 name: ':art: Art (pfp)',
-                value: 'by: serissaarts',
+                value: 'serissaarts',
                 inline: true
             },
             )

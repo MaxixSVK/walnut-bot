@@ -37,7 +37,15 @@ cd walnut-bot
 npm install
 ```
 3. From .env.example create a .env file and fill in the required information
-4. Start the bot
+
+## Running the Bot
+
+**Note:** When running the bot for the first time (or updating slash commands) you need to deploy slash commands to discord servers. You can do this by running the following command:
+```sh
+node src/deployCommands.js
+```
+
+You can start the bot with the following command:
 ```sh
 npm start
 ```

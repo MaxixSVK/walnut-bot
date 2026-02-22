@@ -20,7 +20,7 @@ module.exports = {
             const errorembed = new EmbedBuilder()
                 .setColor('Red')
                 .setTitle('ERROR')
-                .setDescription(`There was an error while executing this command!\n Please contact the bot developer: maxix_sk.\n Attempting to restart the bot due to an error...`);
+                .setDescription(`There was an error while executing this command!\n Attempting to restart the bot due to an error...`);
 
             if (interaction.replied || interaction.deferred) {
                 await interaction.followUp({ embeds: [errorembed], ephemeral: true });

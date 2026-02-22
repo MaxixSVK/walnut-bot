@@ -25,7 +25,6 @@ module.exports = {
         const botEmbed = new EmbedBuilder()
             .setColor(color)
             .setTitle('Walnut')
-            .setURL('https://github.com/MaxixSVK/walnut-bot')
             .setImage('https://i.imgur.com/mRVTlKf.jpeg')
             .addFields(
                 { name: ':speech_balloon: Version:', value: client.information.version, inline: true }

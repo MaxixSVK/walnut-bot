@@ -1,10 +1,13 @@
 # Walnut Bot
 
-Custom made bot for https://discord.gg/LycorisRecoil
+Custom made bot for https://discord.gg/LycorisRecoil \
+Made with ❤️ by [MaxixSVK](https://maxix.sk/)
 
 ## Project Status
 
-This bot is in **maintenance mode**. It works as-is, but I'm not actively developing new features or providing regular updates.
+This project is discontinued and will not receive any updates. The code is open source and available under terms stated in the [LICENSE](LICENSE).
+
+RIP Walnut 2023-12-10 - 2026-05-10.
 
 ## Setup app on Discord Developer Portal
 
@@ -28,27 +31,34 @@ This bot is in **maintenance mode**. It works as-is, but I'm not actively develo
 ## Setup Environment
 
 1. Clone the repository
+
 ```sh
 git clone https://github.com/MaxixSVK/walnut-bot.git
 ```
+
 2. Install dependencies
+
 ```sh
 cd walnut-bot
 npm install
 ```
+
 3. From .env.example create a .env file and fill in the required information
 
 ## Running the Bot
 
 **Note:** When running the bot for the first time (or updating slash commands) you need to deploy slash commands to discord servers. You can do this by running the following command:
+
 ```sh
 node src/deployCommands.js
 ```
 
 You can start the bot with the following command:
+
 ```sh
 npm start
 ```
 
 ## License
+
 This project is licensed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for details.
